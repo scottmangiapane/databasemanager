@@ -2,8 +2,6 @@ const electron = require('electron');
 const path = require('path');
 const url = require('url');
 
-const pg = require('./controllers/pg.js');
-
 const { app, BrowserWindow, ipcMain, Menu } = electron;
 
 const menu = [
@@ -27,11 +25,6 @@ const menu = [
         ]
     }
 ];
-
-// pg.query('SELECT * FROM users;')
-//     .then((res) => {
-//         console.log(res);
-//     });
 
 let window;
 app.on('ready', () => {
