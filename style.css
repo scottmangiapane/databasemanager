@@ -3,47 +3,57 @@
     font: caption;
     margin: 0;
     padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
-body, html {
-    height: 100%;
+a {
+    color: inherit;
+    text-decoration: inherit;
 }
 
 body {
     overflow: hidden;
 }
 
-ul {
-    list-style-type: none;
-}
-
-.top {
-    background-color: #282828;
-    height: 50px;
-    margin-left: 200px;
-    width: 100%;
-}
-
-.tab {
-    background-color: #313131;
-    float: left;
+body, html {
+    background-color: #1b1b1b;
     height: 100%;
-    width: 50px;
 }
 
-.left {
-    background-color: #282828;
-    float: left;
-    height: 100%;
-    width: 200px;
+li {
+    padding: 10px;
 }
 
 .main {
     background-color: #1b1b1b;
     height: 100%;
     margin-left: 200px;
+    padding: 10px;
+}
+
+.menu {
+    -webkit-app-region: drag;
+    background-color: #282828;
+    height: 38px;
+    width: 100%;
+}
+
+.selected {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.sidebar {
+    background-color: #282828;
+    float: left;
+    height: 100%;
+    width: 200px;
 }
 
 .tint {
     background-color: #e9ecef;
+}
+
+ul {
+    list-style-type: none;
 }

@@ -25,8 +25,10 @@ app.on('ready', () => {
     window = new BrowserWindow({
         width: 800,
         height: 500,
+        backgroundColor: '#1b1b1b',
         show: false,
-        title: 'Database Manager'
+        title: 'Database Manager',
+        titleBarStyle: 'hiddenInset'
     });
     window.loadURL(url.format({
         pathname: path.join(__dirname, 'window.html'),
