@@ -5,17 +5,16 @@ dotenv.load();
 
 const client = new Client({
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: 5432,
     host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: 5432,
     ssl: true
 });
 
-exports.pgConnect = async function () {
+exports.query = async (string) => {
     await client.connect();
-
-    const res = await client.query('SELECT * FROM users;');
-    console.log(res.rows[0]);
+    const res = await client.query(string);
     await client.end();
+    return res;
 }

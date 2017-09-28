@@ -2,26 +2,36 @@ const electron = require('electron');
 const path = require('path');
 const url = require('url');
 
-const pg = require('./pg.js');
+const pg = require('./controllers/pg.js');
 
-const { app, BrowserWindow, Menu } = electron;
+const { app, BrowserWindow, ipcMain, Menu } = electron;
 
 const menu = [
     {
         label: 'File',
         submenu: [
             {
+                label: 'Developer Tools',
+                accelerator: 'CmdOrCtrl+Option+I',
+                click() {
+                    window.toggleDevTools();
+                }
+            },
+            {
                 label: 'Quit',
                 accelerator: 'CmdOrCtrl+Q',
                 click() {
                     app.quit();
                 }
-            }
+            },
         ]
     }
 ];
 
-pg.pgConnect();
+// pg.query('SELECT * FROM users;')
+//     .then((res) => {
+//         console.log(res);
+//     });
 
 let window;
 app.on('ready', () => {
@@ -36,7 +46,7 @@ app.on('ready', () => {
         titleBarStyle: 'hiddenInset'
     });
     window.loadURL(url.format({
-        pathname: path.join(__dirname, 'window.html'),
+        pathname: path.join(__dirname, 'views/window.html'),
         protocol: 'file:'
     }));
     window.on('ready-to-show', () => {
@@ -46,3 +56,8 @@ app.on('ready', () => {
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
 });
+
+ipcMain.on('asynchronous-message', (event, arg) => {
+    console.log('message: ' + arg);
+    event.sender.send('asynchronous-reply', 'pong');
+})
