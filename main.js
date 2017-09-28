@@ -1,7 +1,8 @@
 const electron = require('electron');
-const fs = require("fs");
 const path = require('path');
 const url = require('url');
+
+const pg = require('./pg.js');
 
 const { app, BrowserWindow, Menu } = electron;
 
@@ -20,10 +21,9 @@ const menu = [
     }
 ];
 
-let data = fs.readFileSync('.env');
+pg.pgConnect();
 
 let window;
-
 app.on('ready', () => {
     window = new BrowserWindow({
         width: 800,
