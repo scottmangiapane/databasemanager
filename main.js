@@ -1,6 +1,7 @@
 const electron = require('electron');
-const url = require('url');
+const fs = require("fs");
 const path = require('path');
+const url = require('url');
 
 const { app, BrowserWindow, Menu } = electron;
 
@@ -19,12 +20,16 @@ const menu = [
     }
 ];
 
+let data = fs.readFileSync('.env');
+
 let window;
 
 app.on('ready', () => {
     window = new BrowserWindow({
         width: 800,
         height: 500,
+        minWidth: 250,
+        minHeight: 100,
         backgroundColor: '#1b1b1b',
         show: false,
         title: 'Database Manager',
