@@ -25,12 +25,17 @@ app.on('ready', () => {
     window = new BrowserWindow({
         width: 800,
         height: 500,
+        show: false,
         title: 'Database Manager'
     });
     window.loadURL(url.format({
         pathname: path.join(__dirname, 'window.html'),
         protocol: 'file:'
     }));
+    window.on('ready-to-show', () => {
+        window.show();
+        window.focus();
+    });
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
 });
