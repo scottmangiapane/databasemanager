@@ -36,7 +36,7 @@ app.on('ready', () => {
         backgroundColor: '#1b1b1b',
         show: false,
         title: 'Database Manager',
-        titleBarStyle: 'hiddenInset'
+        titleBarStyle: 'hidden'
     });
     window.loadURL(url.format({
         pathname: path.join(__dirname, 'views/window.html'),
