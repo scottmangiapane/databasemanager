@@ -14,7 +14,7 @@ a {
 }
 
 body, html {
-    background-color: #1b1b1b;
+    background-color: #1B1B1B;
     height: 100%;
 }
 
@@ -23,13 +23,12 @@ li:hover {
 }
 
 table {
-    border: 2px solid #F44336;
     border-collapse: collapse;
     min-width: 100%;
 }
 
 td, th {
-    max-width: 150px;
+    max-width: 400px;
     overflow: hidden;
     padding: 10px;
     text-align: left;
@@ -42,26 +41,35 @@ th {
     background: #F44336;
 }
 
-tr {
-    background: rgba(255, 255, 255, 0.02);
+tr:nth-of-type(even) {
+    background: rgba(255, 255, 255, 0.03);
 }
 
-tr:nth-of-type(even) {
-    background: rgba(255, 255, 255, 0.04);
+ul {
+    list-style-type: none;
 }
 
 .main {
-    background-color: #1b1b1b;
-    height: calc(100% - 38px);
+    height: calc(100% - 42px);
     margin-left: 200px;
     overflow: auto;
 }
 
 .menu {
     -webkit-app-region: drag;
-    background-color: rgba(255, 255, 255, 0.06);
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
     height: 38px;
+    justify-content: center;
     width: 100%;
+}
+
+.menu > p {
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0 80px;
+    text-overflow: ellipsis;
 }
 
 .selected {
@@ -78,10 +86,6 @@ tr:nth-of-type(even) {
 
 .sidebar-item {
     padding: 10px;
-}
-
-ul {
-    list-style-type: none;
 }
 
 ::-webkit-scrollbar {

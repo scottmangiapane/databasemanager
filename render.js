@@ -11,8 +11,8 @@ const pool = new Pool({
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
-    port: 5432,
-    ssl: true
+    port: process.env.DB_PORT,
+    ssl: process.env.DB_SSL === 'true'
 });
 
 const query = (statement, callback) => {
@@ -33,22 +33,22 @@ const query = (statement, callback) => {
 populateTable = (name) => {
     query('SELECT * FROM ' + name + ';', (res) => {
         table.innerHTML = '';
-        let row = document.createElement('tr');
+        const row = document.createElement('tr');
         table.appendChild(row);
-        let columns = [];
+        const columns = [];
         res.fields.forEach((element) => {
-            let header = document.createElement('th');
-            let text = document.createTextNode(element.name);
+            const header = document.createElement('th');
+            const text = document.createTextNode(element.name);
             columns.push(element.name);
             header.appendChild(text);
             row.appendChild(header);
             table.appendChild(row);
         });
         res.rows.forEach((element) => {
-            let row = document.createElement('tr');
+            const row = document.createElement('tr');
             columns.forEach((column) => {
-                let data = document.createElement('td');
-                let text = document.createTextNode(element[column]);
+                const data = document.createElement('td');
+                const text = document.createTextNode(element[column]);
                 data.appendChild(text);
                 row.appendChild(data);
             });
@@ -57,13 +57,16 @@ populateTable = (name) => {
     });
 };
 
+const title = document.getElementById('title');
+title.innerHTML = process.env.DB_NAME;
+
 query('SELECT table_name FROM information_schema.tables WHERE table_schema=\'public\';', (res) => {
     sidebar.innerHTML = '';
     res.rows.forEach((element) => {
-        let link = document.createElement('a');
-        let item = document.createElement('li');
+        const link = document.createElement('a');
+        const item = document.createElement('li');
         item.classList += 'sidebar-item';
-        let text = document.createTextNode(element.table_name);
+        const text = document.createTextNode(element.table_name);
         link.onclick = () => { populateTable(element.table_name); };
         item.appendChild(text);
         link.appendChild(item);
