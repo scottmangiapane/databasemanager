@@ -62,8 +62,9 @@ query('SELECT table_name FROM information_schema.tables WHERE table_schema=\'pub
     res.rows.forEach((element) => {
         let link = document.createElement('a');
         let item = document.createElement('li');
+        item.classList += 'sidebar-item';
         let text = document.createTextNode(element.table_name);
-        link.onclick = () => { populateTable(element.table_name) };
+        link.onclick = () => { populateTable(element.table_name); };
         item.appendChild(text);
         link.appendChild(item);
         sidebar.appendChild(link);
