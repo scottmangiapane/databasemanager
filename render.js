@@ -1,16 +1,12 @@
-const { ipcRenderer } = require('electron');
-const { Client } = require('pg');
-
-ipcRenderer.on('asynchronous-reply', (event, arg) => {
-    console.log('reply: ' + arg);
-})
-ipcRenderer.send('asynchronous-message', 'ping');
-
+const { Pool } = require('pg');
 const dotenv = require('dotenv');
+
+const sidebar = document.getElementById('sidebar');
+const table = document.getElementById('table');
 
 dotenv.load();
 
-const client = new Client({
+const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
@@ -19,26 +15,33 @@ const client = new Client({
     ssl: true
 });
 
-const query = async (string) => {
-    await client.connect();
-    const res = await client.query(string);
-    await client.end();
-    return res;
+const query = (statement, callback) => {
+    pool.connect((err, client, release) => {
+        if (err) {
+            return console.error('Error requiring client', err.stack);
+        }
+        client.query(statement, (err, res) => {
+            if (err) {
+                return console.error('Error executing query', err.stack);
+            }
+            client.release(true);
+            callback(res);
+        })
+    });
 }
 
-let table = document.getElementById('table');
-table.innerHTML = '';
-query('SELECT * FROM users;')
-    .then((res) => {
+populateTable = (name) => {
+    query('SELECT * FROM ' + name + ';', (res) => {
+        table.innerHTML = '';
         let row = document.createElement('tr');
         table.appendChild(row);
         let columns = [];
         res.fields.forEach((element) => {
-            let column = document.createElement('th');
+            let header = document.createElement('th');
             let text = document.createTextNode(element.name);
             columns.push(element.name);
-            column.appendChild(text);
-            row.appendChild(column);
+            header.appendChild(text);
+            row.appendChild(header);
             table.appendChild(row);
         });
         res.rows.forEach((element) => {
@@ -52,3 +55,17 @@ query('SELECT * FROM users;')
             table.appendChild(row);
         });
     });
+};
+
+query('SELECT table_name FROM information_schema.tables WHERE table_schema=\'public\';', (res) => {
+    sidebar.innerHTML = '';
+    res.rows.forEach((element) => {
+        let link = document.createElement('a');
+        let item = document.createElement('li');
+        let text = document.createTextNode(element.table_name);
+        link.onclick = () => { populateTable(element.table_name) };
+        item.appendChild(text);
+        link.appendChild(item);
+        sidebar.appendChild(link);
+    });
+});

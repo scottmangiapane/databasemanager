@@ -2,7 +2,7 @@ const electron = require('electron');
 const path = require('path');
 const url = require('url');
 
-const { app, BrowserWindow, ipcMain, Menu } = electron;
+const { app, BrowserWindow, Menu } = electron;
 
 const menu = [
     {
@@ -49,8 +49,3 @@ app.on('ready', () => {
 
     Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
 });
-
-ipcMain.on('asynchronous-message', (event, arg) => {
-    console.log('message: ' + arg);
-    event.sender.send('asynchronous-reply', 'pong');
-})
