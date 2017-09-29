@@ -14,12 +14,12 @@ a {
 }
 
 body, html {
-    background-color: #1B1B1B;
+    background-color: #181818;
     height: 100%;
 }
 
 li:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(255, 255, 255, 0.04);
 }
 
 table {
@@ -37,32 +37,35 @@ td, th {
 }
 
 th {
+    color: #2196F3;
     font-weight: bold;
-    background: #F44336;
 }
 
-tr:nth-of-type(even) {
-    background: rgba(255, 255, 255, 0.03);
+tr:nth-of-type(odd) {
+    background: rgba(255, 255, 255, 0.04);
 }
 
 ul {
     list-style-type: none;
 }
 
+.bar {
+    -webkit-app-region: drag;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
 .main {
-    height: calc(100% - 42px);
+    background: rgba(255, 255, 255, 0.04);
+    height: calc(100% - 38px - 24px);
     margin-left: 200px;
     overflow: auto;
 }
 
-.menu {
-    -webkit-app-region: drag;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.2);
-    display: flex;
+.menubar {
     height: 38px;
-    justify-content: center;
-    width: 100%;
 }
 
 .menu > p {
@@ -73,19 +76,22 @@ ul {
 }
 
 .selected {
-    background-color: rgba(255, 255, 255, 0.08);
+    background-color: rgba(255, 255, 255, 0.09);
 }
 
 .sidebar {
-    background-color: rgba(255, 255, 255, 0.06);
     float: left;
-    height: calc(100% - 38px);
+    height: calc(100% - 38px - 24px);
     overflow-y: auto;
     width: 200px;
 }
 
 .sidebar-item {
     padding: 10px;
+}
+
+.statusbar {
+    height: 24px;
 }
 
 ::-webkit-scrollbar {

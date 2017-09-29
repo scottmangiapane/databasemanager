@@ -31,10 +31,9 @@ app.on('ready', () => {
     window = new BrowserWindow({
         width: 800,
         height: 500,
-        minWidth: 250,
-        minHeight: 100,
+        minWidth: 300,
+        minHeight: 150,
         backgroundColor: '#1b1b1b',
-        fullscreen: false,
         show: false,
         title: 'Database Manager',
         titleBarStyle: 'hiddenInset'
