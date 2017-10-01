@@ -60,7 +60,7 @@ populateTable = (name) => {
 const title = document.getElementById('title');
 title.innerHTML = process.env.DB_NAME;
 
-query('SELECT table_name FROM information_schema.tables WHERE table_schema=\'public\';', (res) => {
+query('SELECT table_name FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name ASC;', (res) => {
     sidebar.innerHTML = '';
     res.rows.forEach((element) => {
         const link = document.createElement('a');

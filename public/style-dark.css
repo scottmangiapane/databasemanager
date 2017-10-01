@@ -1,0 +1,31 @@
+* {
+    color: rgba(255, 255, 255, 0.87);
+}
+
+body, html {
+    background-color: #1b1b1b;
+}
+
+li:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+tr:nth-of-type(odd) {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.main {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.selected {
+    background-color: rgba(255, 255, 255, 0.09);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: rgba(255, 255, 255, 0.61);
+}

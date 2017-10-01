@@ -1,5 +1,5 @@
 * {
-    color: rgba(255, 255, 255, 0.87);
+    color: WindowText;
     font: caption;
     margin: 0;
     padding: 0;
@@ -14,12 +14,12 @@ a {
 }
 
 body, html {
-    background-color: #1b1b1b;
+	background-color: Window;
     height: 100%;
 }
 
 li:hover {
-    background-color: rgba(255, 255, 255, 0.04);
+    background-color: rgba(0, 0, 0, 0.04);
 }
 
 table {
@@ -42,7 +42,7 @@ th {
 }
 
 tr:nth-of-type(odd) {
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(0, 0, 0, 0.04);
 }
 
 ul {
@@ -58,7 +58,7 @@ ul {
 }
 
 .main {
-    background: rgba(255, 255, 255, 0.04);
+    background-color: white;
     height: calc(100% - 24px);
     margin-left: 200px;
     overflow: auto;
@@ -76,7 +76,7 @@ ul {
 }
 
 .selected {
-    background-color: rgba(255, 255, 255, 0.09);
+    background-color: rgba(0, 0, 0, 0.9);
 }
 
 .sidebar {
@@ -101,13 +101,13 @@ ul {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 4px;
     -webkit-border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:active {
-    background-color: rgba(255, 255, 255, 0.61);
+    background-color: rgba(0, 0, 0, 0.61);
     border-radius: 4px;
     -webkit-border-radius: 4px;
 }
