@@ -9,6 +9,18 @@ const menu = [
         label: 'File',
         submenu: [
             {
+                label: 'Quit',
+                accelerator: 'CmdOrCtrl+Q',
+                click() {
+                    app.quit();
+                }
+            },
+        ]
+    },
+    {
+        label: 'View',
+        submenu: [
+            {
                 label: 'Developer Tools',
                 accelerator: 'CmdOrCtrl+Option+I',
                 click() {
@@ -16,12 +28,11 @@ const menu = [
                 }
             },
             {
-                label: 'Quit',
-                accelerator: 'CmdOrCtrl+Q',
+                label: 'Invert',
+                accelerator: 'CmdOrCtrl+I',
                 click() {
-                    app.quit();
                 }
-            },
+            }
         ]
     }
 ];

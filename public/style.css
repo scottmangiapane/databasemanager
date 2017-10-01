@@ -65,6 +65,7 @@ ul {
 }
 
 .menubar {
+    background-color: rgba(0, 0, 0, 0.06);
     height: 24px;
 }
 
@@ -86,8 +87,14 @@ ul {
     width: 200px;
 }
 
+.sidebar-icon {
+    height: 1em;
+    width: 1em;
+}
+
 .sidebar-item {
     padding: 8px;
+    white-space: nowrap;
 }
 
 ::-webkit-scrollbar {
