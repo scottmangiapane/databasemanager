@@ -60,7 +60,7 @@ populateTable = (name) => {
 const title = document.getElementById('title');
 title.innerHTML = process.env.DB_NAME;
 
-query('SELECT table_name FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name ASC;', (res) => {
+query('SELECT table_name, table_type FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name ASC;', (res) => {
     sidebar.innerHTML = '';
     res.rows.forEach((element) => {
         const link = document.createElement('a');
@@ -68,7 +68,10 @@ query('SELECT table_name FROM information_schema.tables WHERE table_schema=\'pub
         item.classList += 'sidebar-item';
         const icon = document.createElement('img');
         icon.classList += 'sidebar-icon';
-        icon.src = '../public/table.svg';
+        if (element.table_type === 'BASE TABLE')
+            icon.src = '../public/table.svg';
+        if (element.table_type === 'VIEW')
+            icon.src = '../public/view.svg';
         const text = document.createTextNode(' ' + element.table_name);
         link.onclick = () => { populateTable(element.table_name); };
         item.appendChild(icon);
