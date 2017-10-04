@@ -1,4 +1,6 @@
 const electron = require('electron');
+const Store = require('electron-store');
+const store = new Store();
 const path = require('path');
 const url = require('url');
 
@@ -31,6 +33,11 @@ const menu = [
                 label: 'Invert',
                 accelerator: 'CmdOrCtrl+I',
                 click() {
+                    if (store.get('darkTheme')) {
+                        store.delete('darkTheme');
+                    } else {
+                        store.set('darkTheme', 'true');
+                    }
                 }
             }
         ]

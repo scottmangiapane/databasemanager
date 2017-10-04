@@ -1,5 +1,5 @@
-const { Pool } = require('pg');
 const dotenv = require('dotenv');
+const { Pool } = require('pg');
 
 const sidebar = document.getElementById('sidebar');
 const table = document.getElementById('table');
