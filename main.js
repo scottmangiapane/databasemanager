@@ -1,10 +1,9 @@
-const electron = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const Store = require('electron-store');
-const store = new Store();
 const path = require('path');
 const url = require('url');
 
-const { app, BrowserWindow, Menu } = electron;
+let window;
 
 const menu = [
     {
@@ -38,13 +37,14 @@ const menu = [
                     } else {
                         store.set('darkTheme', 'true');
                     }
+                    window.webContents.send('update-theme');
                 }
             }
         ]
     }
 ];
+const store = new Store();
 
-let window;
 app.on('ready', () => {
     window = new BrowserWindow({
         width: 800,
@@ -56,6 +56,7 @@ app.on('ready', () => {
         title: 'Database Manager',
         titleBarStyle: 'hidden'
     });
+
     window.loadURL(url.format({
         pathname: path.join(__dirname, 'views/window.html'),
         protocol: 'file:'

@@ -1,11 +1,11 @@
 const dotenv = require('dotenv');
+const { ipcRenderer } = require('electron');
+const Store = require('electron-store');
 const { Pool } = require('pg');
-
-const sidebar = document.getElementById('sidebar');
-const table = document.getElementById('table');
 
 dotenv.load();
 
+const link = document.createElement('link');
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -14,23 +14,45 @@ const pool = new Pool({
     port: process.env.DB_PORT,
     ssl: process.env.DB_SSL === 'true'
 });
+const sidebar = document.getElementById('sidebar');
+const store = new Store();
+const table = document.getElementById('table');
 
-const query = (statement, callback) => {
-    pool.connect((err, client, release) => {
-        if (err) {
-            return console.error('Error requiring client', err.stack);
-        }
-        client.query(statement, (err, res) => {
-            if (err) {
-                return console.error('Error executing query', err.stack);
-            }
-            client.release(true);
-            callback(res);
-        })
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = '../public/style-dark.css';
+
+function initialize() {
+    if (store.get('darkTheme')) {
+        document.head.appendChild(link);
+    }
+
+    const title = document.getElementById('title');
+    title.innerHTML = process.env.DB_NAME;
+
+    query('SELECT table_name, table_type FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name ASC;', (res) => {
+        sidebar.innerHTML = '';
+        res.rows.forEach((element) => {
+            const link = document.createElement('a');
+            const item = document.createElement('li');
+            item.classList += 'sidebar-item';
+            const icon = document.createElement('img');
+            icon.classList += 'sidebar-icon';
+            if (element.table_type === 'BASE TABLE')
+                icon.src = '../public/table.svg';
+            if (element.table_type === 'VIEW')
+                icon.src = '../public/view.svg';
+            const text = document.createTextNode(' ' + element.table_name);
+            link.onclick = () => { populateTable(element.table_name); };
+            item.appendChild(icon);
+            item.appendChild(text);
+            link.appendChild(item);
+            sidebar.appendChild(link);
+        });
     });
-}
+};
 
-populateTable = (name) => {
+function populateTable(name) {
     query('SELECT * FROM ' + name + ';', (res) => {
         table.innerHTML = '';
         const row = document.createElement('tr');
@@ -57,26 +79,30 @@ populateTable = (name) => {
     });
 };
 
-const title = document.getElementById('title');
-title.innerHTML = process.env.DB_NAME;
-
-query('SELECT table_name, table_type FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name ASC;', (res) => {
-    sidebar.innerHTML = '';
-    res.rows.forEach((element) => {
-        const link = document.createElement('a');
-        const item = document.createElement('li');
-        item.classList += 'sidebar-item';
-        const icon = document.createElement('img');
-        icon.classList += 'sidebar-icon';
-        if (element.table_type === 'BASE TABLE')
-            icon.src = '../public/table.svg';
-        if (element.table_type === 'VIEW')
-            icon.src = '../public/view.svg';
-        const text = document.createTextNode(' ' + element.table_name);
-        link.onclick = () => { populateTable(element.table_name); };
-        item.appendChild(icon);
-        item.appendChild(text);
-        link.appendChild(item);
-        sidebar.appendChild(link);
+function query(statement, callback) {
+    pool.connect((err, client, release) => {
+        if (err) {
+            return console.error('Error requiring client', err.stack);
+        }
+        client.query(statement, (err, res) => {
+            if (err) {
+                return console.error('Error executing query', err.stack);
+            }
+            client.release(true);
+            callback(res);
+        })
     });
-});
+}
+
+function updateTheme() {
+    ipcRenderer.on('update-theme', () => {
+        if (store.get('darkTheme')) {
+            document.head.appendChild(link);
+        } else {
+            document.head.removeChild(link);
+        }
+    });
+};
+
+initialize();
+updateTheme();
