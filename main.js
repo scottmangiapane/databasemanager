@@ -51,7 +51,6 @@ app.on('ready', () => {
         height: 500,
         minWidth: 300,
         minHeight: 150,
-        backgroundColor: '#1b1b1b',
         show: false,
         title: 'Database Manager',
         titleBarStyle: 'hidden'
