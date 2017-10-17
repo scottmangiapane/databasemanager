@@ -5,7 +5,7 @@ const { Pool } = require('pg');
 
 dotenv.load();
 
-const link = document.createElement('link');
+const darkTheme = document.createElement('link');
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -18,13 +18,22 @@ const sidebar = document.getElementById('sidebar');
 const store = new Store();
 const table = document.getElementById('table');
 
-link.rel = 'stylesheet';
-link.type = 'text/css';
-link.href = '../public/style-dark.css';
+darkTheme.href = '../public/style-dark.css';
+darkTheme.rel = 'stylesheet';
+darkTheme.type = 'text/css';
+ipcRenderer.on('update-theme', () => {
+    if (store.get('darkTheme')) {
+        document.head.appendChild(darkTheme);
+    } else {
+        document.head.removeChild(darkTheme);
+    }
+});
+
+initialize();
 
 function initialize() {
     if (store.get('darkTheme')) {
-        document.head.appendChild(link);
+        document.head.appendChild(darkTheme);
     }
 
     const title = document.getElementById('title');
@@ -93,16 +102,3 @@ function query(statement, callback) {
         })
     });
 }
-
-function updateTheme() {
-    ipcRenderer.on('update-theme', () => {
-        if (store.get('darkTheme')) {
-            document.head.appendChild(link);
-        } else {
-            document.head.removeChild(link);
-        }
-    });
-};
-
-initialize();
-updateTheme();
