@@ -57,9 +57,10 @@ app.on('ready', () => {
     });
 
     window.loadURL(url.format({
-        pathname: path.join(__dirname, 'views/window.html'),
+        pathname: path.join(__dirname, 'window.html'),
         protocol: 'file:'
     }));
+
     window.on('ready-to-show', () => {
         window.show();
         window.focus();

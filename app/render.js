@@ -18,7 +18,7 @@ const sidebar = document.getElementById('sidebar');
 const store = new Store();
 const table = document.getElementById('table');
 
-darkTheme.href = '../public/style-dark.css';
+darkTheme.href = 'resources/style-dark.css';
 darkTheme.rel = 'stylesheet';
 darkTheme.type = 'text/css';
 ipcRenderer.on('update-theme', () => {
@@ -48,9 +48,9 @@ function initialize() {
             const icon = document.createElement('img');
             icon.classList += 'sidebar-icon';
             if (element.table_type === 'BASE TABLE')
-                icon.src = '../public/table.svg';
+                icon.src = 'resources/table.svg';
             if (element.table_type === 'VIEW')
-                icon.src = '../public/view.svg';
+                icon.src = 'resources/view.svg';
             const text = document.createTextNode(' ' + element.table_name);
             link.onclick = () => { populateTable(element.table_name); };
             item.appendChild(icon);
