@@ -14,8 +14,9 @@ a {
 }
 
 body, html {
-	background-color: Window;
+    background-color: Window;
     height: 100%;
+    width: 100%;
 }
 
 li:hover {
@@ -42,7 +43,7 @@ th {
 }
 
 tr:nth-of-type(odd) {
-    background: rgba(0, 0, 0, 0.04);
+    background-color: rgba(0, 0, 0, 0.04);
 }
 
 ul {
@@ -50,31 +51,52 @@ ul {
 }
 
 .bar {
-    -webkit-app-region: drag;
     align-items: center;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: flex-start;
     width: 100%;
+}
+
+.bar > * {
+    flex: 1;
+    min-width: 0;
+    padding: 6px;
+}
+
+.bar button {
+    background-color: Menu;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    min-height: 24px;
+    padding: 0 6px;
+    text-decoration: none;
+}
+
+.bar-left {
+    text-align: left;
+}
+
+.bar-center {
+    text-align: center;
+}
+
+.bar-right {
+    text-align: right;
 }
 
 .main {
     background-color: white;
-    height: calc(100% - 22px - 1px);
+    height: calc(100% - 38px - 1px);
     margin-left: 200px;
     overflow: auto;
 }
 
 .menubar {
+    -webkit-app-region: drag;
     background-color: rgba(0, 0, 0, 0.06);
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    height: 22px;
-}
-
-.menu > p {
-    max-width: 100%;
-    overflow: hidden;
-    padding: 0 80px;
-    text-overflow: ellipsis;
+    height: 38px;
 }
 
 .selected {
@@ -84,7 +106,7 @@ ul {
 .sidebar {
     border-right: 1px solid rgba(0, 0, 0, 0.1);
     float: left;
-    height: calc(100% - 22px - 1px);
+    height: calc(100% - 38px - 1px);
     overflow-y: auto;
     width: 200px;
 }
@@ -96,6 +118,13 @@ ul {
 
 .sidebar-item {
     padding: 6px;
+    white-space: nowrap;
+}
+
+.truncate {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
     white-space: nowrap;
 }
 

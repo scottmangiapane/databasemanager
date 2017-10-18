@@ -5,44 +5,6 @@ const url = require('url');
 
 let window;
 
-const menu = [
-    {
-        label: 'File',
-        submenu: [
-            {
-                label: 'Quit',
-                accelerator: 'CmdOrCtrl+Q',
-                click() {
-                    app.quit();
-                }
-            },
-        ]
-    },
-    {
-        label: 'View',
-        submenu: [
-            {
-                label: 'Developer Tools',
-                accelerator: 'CmdOrCtrl+Option+I',
-                click() {
-                    window.toggleDevTools();
-                }
-            },
-            {
-                label: 'Invert',
-                accelerator: 'CmdOrCtrl+I',
-                click() {
-                    if (store.get('darkTheme')) {
-                        store.delete('darkTheme');
-                    } else {
-                        store.set('darkTheme', 'true');
-                    }
-                    window.webContents.send('update-theme');
-                }
-            }
-        ]
-    }
-];
 const store = new Store();
 
 app.on('ready', () => {
@@ -53,7 +15,7 @@ app.on('ready', () => {
         minHeight: 150,
         show: false,
         title: 'Database Manager',
-        titleBarStyle: 'hidden'
+        titleBarStyle: 'hidden-inset'
     });
 
     window.loadURL(url.format({
@@ -66,5 +28,42 @@ app.on('ready', () => {
         window.focus();
     });
 
-    Menu.setApplicationMenu(Menu.buildFromTemplate(menu));
+    Menu.setApplicationMenu(Menu.buildFromTemplate([
+        {
+            label: 'File',
+            submenu: [
+                {
+                    label: 'Quit',
+                    accelerator: 'CmdOrCtrl+Q',
+                    click() {
+                        app.quit();
+                    }
+                },
+            ]
+        },
+        {
+            label: 'View',
+            submenu: [
+                {
+                    label: 'Developer Tools',
+                    accelerator: 'CmdOrCtrl+Option+I',
+                    click() {
+                        window.toggleDevTools();
+                    }
+                },
+                {
+                    label: 'Invert',
+                    accelerator: 'CmdOrCtrl+I',
+                    click() {
+                        if (store.get('darkTheme')) {
+                            store.delete('darkTheme');
+                        } else {
+                            store.set('darkTheme', 'true');
+                        }
+                        window.webContents.send('update-theme');
+                    }
+                }
+            ]
+        }
+    ]));
 });
