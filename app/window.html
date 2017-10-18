@@ -7,10 +7,8 @@
 </head>
 
 <body>
-    <div class="bar menubar">
-        <div class="bar-center">
-            <p class="truncate" id="title"></p>
-        </div>
+    <div class="center menubar">
+        <p class="truncate" id="title"></p>
     </div>
     <div class="sidebar">
         <ul id="sidebar"></ul>
@@ -18,12 +16,14 @@
     <div class="main">
         <table id="table"></table>
     </div>
-    <div class="bar navbar">
+    <div class="navbar">
         <div class="bar-left">
+            <input type="button" value="Console">
         </div>
         <div class="bar-right">
-            <button>&lt;</button>
-            <button>&gt;</button>
+            <input type="search" placeholder="Search">
+            <input type="button" value="<">
+            <input type="button" value=">">
         </div>
     </div>
     <script src="render.js"></script>

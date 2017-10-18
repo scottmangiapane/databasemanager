@@ -3,16 +3,19 @@
 }
 
 body, html {
-    background-color: #1b1b1b;
+    background-color: #212121;
 }
 
-button {
-    background-color: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+input {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+input[type=button]:active {
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
 li:hover {
-    background-color: rgba(255, 255, 255, 0.04);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 tr:nth-of-type(odd) {
@@ -21,7 +24,6 @@ tr:nth-of-type(odd) {
 
 .main {
     background-color: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .selected {
@@ -29,11 +31,11 @@ tr:nth-of-type(odd) {
 }
 
 ::-webkit-scrollbar {
-    background-color: #1b1b1b;
+    background-color: #212121;
 }
 
 ::-webkit-scrollbar-corner {
-    background-color: #1b1b1b;
+    background-color: #212121;
 }
 
 ::-webkit-scrollbar-thumb {

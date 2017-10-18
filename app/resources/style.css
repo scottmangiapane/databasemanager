@@ -19,7 +19,7 @@ body, html {
     width: 100%;
 }
 
-button {
+input {
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 4px;
@@ -28,16 +28,16 @@ button {
     text-decoration: none;
 }
 
-button:active {
-    filter: brightness(85%);
+input[type=button]:active {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
-button:focus {
+input:focus {
     outline:0;
 }
 
 li:hover {
-    background-color: rgba(0, 0, 0, 0.04);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 table {
@@ -67,7 +67,17 @@ ul {
     list-style-type: none;
 }
 
-.bar {
+.bar-left {
+    float: left;
+    padding: 6px;
+}
+
+.bar-right {
+    float: right;
+    padding: 6px;
+}
+
+.center {
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -75,22 +85,9 @@ ul {
     width: 100%;
 }
 
-.bar > * {
+.center > * {
     flex: 1;
-    min-width: 0;
-    padding: 6px;
-}
-
-.bar-left {
-    text-align: left;
-}
-
-.bar-center {
     text-align: center;
-}
-
-.bar-right {
-    text-align: right;
 }
 
 .main {
@@ -104,11 +101,12 @@ ul {
 .menubar {
     -webkit-app-region: drag;
     height: 22px;
+    width: 100%;
 }
 
 .navbar {
-    float: right;
     height: 38px;
+    margin-left: 200px;
     width: calc(100% - 200px - 1px);
 }
 

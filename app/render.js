@@ -43,6 +43,7 @@ function initialize() {
         sidebar.innerHTML = '';
         res.rows.forEach((element) => {
             const link = document.createElement('a');
+            link.onclick = () => { populateTable(element.table_name); };
             const item = document.createElement('li');
             item.classList += 'sidebar-item';
             const icon = document.createElement('img');
@@ -52,7 +53,6 @@ function initialize() {
             if (element.table_type === 'VIEW')
                 icon.src = 'resources/view.svg';
             const text = document.createTextNode(' ' + element.table_name);
-            link.onclick = () => { populateTable(element.table_name); };
             item.appendChild(icon);
             item.appendChild(text);
             link.appendChild(item);
@@ -62,15 +62,15 @@ function initialize() {
 };
 
 function populateTable(name) {
-    query('SELECT * FROM ' + name + ';', (res) => {
+    query('SELECT * FROM ' + name + ' LIMIT 500;', (res) => {
         table.innerHTML = '';
         const row = document.createElement('tr');
         table.appendChild(row);
         const columns = [];
         res.fields.forEach((element) => {
+            columns.push(element.name);
             const header = document.createElement('th');
             const text = document.createTextNode(element.name);
-            columns.push(element.name);
             header.appendChild(text);
             row.appendChild(header);
             table.appendChild(row);
