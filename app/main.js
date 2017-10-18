@@ -15,7 +15,7 @@ app.on('ready', () => {
         minHeight: 150,
         show: false,
         title: 'Database Manager',
-        titleBarStyle: 'hidden-inset'
+        titleBarStyle: 'hidden'
     });
 
     window.loadURL(url.format({
