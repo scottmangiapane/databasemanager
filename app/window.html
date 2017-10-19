@@ -16,8 +16,16 @@
         <ul id="sidebar"></ul>
     </div>
     <div id="main" class="main">
-        <textarea id="query-input"></textarea>
-        <p id="query-output"></p>
+        <div class="vertical-half">
+            <textarea id="query-input"></textarea>
+            <div class="bar-right">
+                <input id="historyButton" type="button" value="History">
+                <input id="executeButton" type="button" value="Execute">
+            </div>
+        </div>
+        <div class="vertical-half">
+            <p id="query-output"></p>
+        </div>
     </div>
     <div class="navbar">
         <div class="bar-left">
