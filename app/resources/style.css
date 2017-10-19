@@ -91,8 +91,7 @@ ul {
 }
 
 .CodeMirror {
-    background-color: transparent;
-    text-shadow: none;
+    height: auto;
 }
 
 .main {

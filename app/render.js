@@ -19,8 +19,11 @@ const sidebar = document.getElementById('sidebar');
 const store = new Store();
 const main = document.getElementById('main');
 const queryInput = CodeMirror.fromTextArea(document.getElementById('query-input'), {
-    mode: 'text/x-sql',
-    theme: 'lesser-dark'
+    autofocus: true,
+    lineNumbers: true,
+    mode: 'text/x-pgsql',
+    tabSize: 4,
+    theme: 'custom'
 });
 const queryOutput = document.getElementById('query-output');
 
