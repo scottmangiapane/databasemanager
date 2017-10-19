@@ -3,6 +3,8 @@
 
 <head>
     <title>Database Manager</title>
+    <link rel="stylesheet" type="text/css" href="../node_modules/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" type="text/css" href="../node_modules/codemirror/theme/lesser-dark.css">
     <link rel="stylesheet" type="text/css" href="resources/style.css">
 </head>
 
@@ -13,19 +15,22 @@
     <div class="sidebar">
         <ul id="sidebar"></ul>
     </div>
-    <div class="main">
-        <table id="table"></table>
+    <div id="main" class="main">
+        <textarea id="query-input" class="query"></textarea>
+        <p id="query-output"></p>
     </div>
     <div class="navbar">
         <div class="bar-left">
-            <input type="button" value="Console">
+            <input id="consoleButton" type="button" value="Console">
         </div>
         <div class="bar-right">
-            <input type="search" placeholder="Search">
+            <input placeholder="Search" type="search">
             <input type="button" value="<">
             <input type="button" value=">">
         </div>
     </div>
+    <script src="../node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="../node_modules/codemirror/mode/sql/sql.js"></script>
     <script src="render.js"></script>
 </body>
 

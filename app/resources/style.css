@@ -90,6 +90,11 @@ ul {
     text-align: center;
 }
 
+.CodeMirror {
+    background-color: transparent;
+    text-shadow: none;
+}
+
 .main {
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.2);
