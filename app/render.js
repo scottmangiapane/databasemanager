@@ -7,8 +7,6 @@ dotenv.load();
 
 const consoleButton = document.getElementById('consoleButton');
 const darkTheme = document.createElement('link');
-const executeButton = document.getElementById('executeButton');
-const historyButton = document.getElementById('historyButton');
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -20,32 +18,11 @@ const pool = new Pool({
 const sidebar = document.getElementById('sidebar');
 const store = new Store();
 const main = document.getElementById('main');
-const queryInput = CodeMirror.fromTextArea(document.getElementById('query-input'), {
-    autofocus: true,
-    lineNumbers: true,
-    mode: 'text/x-pgsql',
-    tabSize: 4,
-    theme: 'custom'
-});
-const queryOutput = document.getElementById('query-output');
 
 consoleButton.onclick = loadConsole;
 darkTheme.href = 'resources/style-dark.css';
 darkTheme.rel = 'stylesheet';
 darkTheme.type = 'text/css';
-executeButton.onclick = () => {
-    query(queryInput.getValue(), (err, res) => {
-        if (err) {
-            queryOutput.innerText = 'ERROR: ' + err.message;
-        } else {
-            queryOutput.innerHTML = '';
-            const table = document.createElement('table');
-            queryOutput.appendChild(table);
-            populateTable(table, res);
-        }
-    });
-}
-historyButton.onclick = history;
 ipcRenderer.on('update-theme', () => {
     if (store.get('darkTheme')) {
         document.head.appendChild(darkTheme);
@@ -57,6 +34,44 @@ ipcRenderer.on('update-theme', () => {
 initialize();
 
 function loadConsole() {
+    main.innerHTML = '<div class="vertical-half"> '
+        + '<textarea id="query-input"> '
+        + '</textarea> '
+        + '<div class="bar-right"> '
+        + '<input id="historyButton" type="button" value="History"> '
+        + '<input id="executeButton" type="button" value="Execute"> '
+        + '</div> '
+        + '<div class="clear"> '
+        + '</div> '
+        + '<hr> '
+        + '</div> '
+        + '<div class="vertical-half"> '
+        + '<p id="query-output"> '
+        + '</p> '
+        + '</div> ';
+    const executeButton = document.getElementById('executeButton');
+    const historyButton = document.getElementById('historyButton');
+    const queryInput = CodeMirror.fromTextArea(document.getElementById('query-input'), {
+        autofocus: true,
+        lineNumbers: true,
+        mode: 'text/x-pgsql',
+        tabSize: 4,
+        theme: 'custom'
+    });
+    const queryOutput = document.getElementById('query-output');
+    executeButton.onclick = () => {
+        query(queryInput.getValue(), (err, res) => {
+            if (err) {
+                queryOutput.innerText = 'ERROR: ' + err.message;
+            } else {
+                queryOutput.innerHTML = '';
+                const table = document.createElement('table');
+                queryOutput.appendChild(table);
+                populateTable(table, res);
+            }
+        });
+    }
+    historyButton.onclick = history;
 }
 
 function history() {
