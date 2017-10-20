@@ -19,6 +19,11 @@ body, html {
     width: 100%;
 }
 
+hr {
+    border-top: 1px solid #777;
+    border-bottom: none;
+}
+
 input {
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -90,8 +95,8 @@ ul {
     text-align: center;
 }
 
-.CodeMirror {
-    height: auto;
+.clear {
+    clear: both;
 }
 
 .main {
