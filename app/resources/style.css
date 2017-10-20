@@ -99,6 +99,10 @@ ul {
     clear: both;
 }
 
+.error-message {
+    margin: 6px;
+}
+
 .main {
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.2);

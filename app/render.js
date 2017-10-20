@@ -5,8 +5,6 @@ const { Pool } = require('pg');
 
 dotenv.load();
 
-const consoleButton = document.getElementById('consoleButton');
-const darkTheme = document.createElement('link');
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -15,42 +13,46 @@ const pool = new Pool({
     port: process.env.DB_PORT,
     ssl: process.env.DB_SSL === 'true'
 });
-const sidebar = document.getElementById('sidebar');
 const store = new Store();
+
+const consoleButton = document.getElementById('consoleButton');
+const darkTheme = document.createElement('link');
 const main = document.getElementById('main');
+const sidebar = document.getElementById('sidebar');
+const title = document.getElementById('title');
 
 consoleButton.onclick = loadConsole;
 darkTheme.href = 'resources/style-dark.css';
 darkTheme.rel = 'stylesheet';
 darkTheme.type = 'text/css';
-ipcRenderer.on('update-theme', () => {
-    if (store.get('darkTheme')) {
-        document.head.appendChild(darkTheme);
-    } else {
-        document.head.removeChild(darkTheme);
-    }
-});
+title.innerHTML = process.env.DB_NAME;
 
-initialize();
+loadTheme();
+ipcRenderer.on('update-theme', loadTheme);
+
+query('SELECT table_name, table_type FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name;',
+    (err, res) => {
+        if (!err) populateSidebar(sidebar, res);
+    });
 
 function loadConsole() {
-    main.innerHTML = '<div class="vertical-half"> '
-        + '<textarea id="query-input"> '
-        + '</textarea> '
-        + '<div class="bar-right"> '
-        + '<input id="historyButton" type="button" value="History"> '
-        + '<input id="executeButton" type="button" value="Execute"> '
-        + '</div> '
-        + '<div class="clear"> '
-        + '</div> '
-        + '<hr> '
-        + '</div> '
-        + '<div class="vertical-half"> '
-        + '<p id="query-output"> '
-        + '</p> '
-        + '</div> ';
+    main.innerHTML = ''
+        + '<div class="vertical-half">\n'
+        + '<textarea id="query-input">\n'
+        + '</textarea>\n'
+        + '<div class="bar-right">\n'
+        + '<input id="historyButton" type="button" value="History">\n'
+        + '<input id="executeButton" type="button" value="Execute">\n'
+        + '</div>\n'
+        + '<div class="clear">\n'
+        + '</div>\n'
+        + '<hr>\n'
+        + '</div>\n'
+        + '<div class="vertical-half">\n'
+        + '<p id="query-output">\n'
+        + '</p>\n'
+        + '</div>\n';
     const executeButton = document.getElementById('executeButton');
-    const historyButton = document.getElementById('historyButton');
     const queryInput = CodeMirror.fromTextArea(document.getElementById('query-input'), {
         autofocus: true,
         lineNumbers: true,
@@ -62,82 +64,81 @@ function loadConsole() {
     executeButton.onclick = () => {
         query(queryInput.getValue(), (err, res) => {
             if (err) {
-                queryOutput.innerText = 'ERROR: ' + err.message;
+                queryOutput.innerHTML = '';
+                const message = document.createElement('p');
+                const messageText = document.createTextNode(err.message);
+                message.classList += 'error-message';
+                message.appendChild(messageText)
+                queryOutput.appendChild(message);
             } else {
                 queryOutput.innerHTML = '';
                 const table = document.createElement('table');
-                queryOutput.appendChild(table);
                 populateTable(table, res);
+                queryOutput.appendChild(table);
             }
         });
     }
-    historyButton.onclick = history;
 }
 
-function history() {
-}
-
-function initialize() {
+function loadTheme() {
+    const hasDarkTheme = document.head.contains(darkTheme);
     if (store.get('darkTheme')) {
-        document.head.appendChild(darkTheme);
+        if (!hasDarkTheme)
+            document.head.appendChild(darkTheme);
+    } else {
+        if (hasDarkTheme)
+            document.head.removeChild(darkTheme);
     }
+}
 
-    const title = document.getElementById('title');
-    title.innerHTML = process.env.DB_NAME;
-
-    query('SELECT table_name, table_type FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name ASC;', (err, res) => {
-        if (!err) {
-            sidebar.innerHTML = '';
-            res.rows.forEach((element) => {
-                const link = document.createElement('a');
-                sidebar.appendChild(link);
-                link.onclick = () => {
-                    main.innerHTML = '';
-                    const table = document.createElement('table');
+function populateSidebar(sidebar, res) {
+    sidebar.innerHTML = '';
+    res.rows.forEach((element) => {
+        const link = document.createElement('a');
+        const item = document.createElement('li');
+        const icon = document.createElement('img');
+        const text = document.createTextNode(' ' + element.table_name);
+        link.onclick = () => {
+            main.innerHTML = '';
+            const table = document.createElement('table');
+            query('SELECT * FROM ' + element.table_name + ' LIMIT 250;', (err, res) => {
+                if (!err) {
+                    populateTable(table, res);
                     main.appendChild(table);
-                    query('SELECT * FROM ' + element.table_name + ' LIMIT 250;', (err, res) => {
-                        if (!err) {
-                            populateTable(table, res);
-                        }
-                    });
-                };
-                const item = document.createElement('li');
-                link.appendChild(item);
-                item.classList += 'sidebar-item';
-                const icon = document.createElement('img');
-                item.appendChild(icon);
-                icon.classList += 'sidebar-icon';
-                if (element.table_type === 'BASE TABLE')
-                    icon.src = 'resources/table.svg';
-                if (element.table_type === 'VIEW')
-                    icon.src = 'resources/view.svg';
-                const text = document.createTextNode(' ' + element.table_name);
-                item.appendChild(text);
+                }
             });
-        }
+        };
+        item.classList += 'sidebar-item';
+        icon.classList += 'sidebar-icon';
+        if (element.table_type === 'BASE TABLE')
+            icon.src = 'resources/table.svg';
+        if (element.table_type === 'VIEW')
+            icon.src = 'resources/view.svg';
+        item.appendChild(icon);
+        item.appendChild(text);
+        link.appendChild(item);
+        sidebar.appendChild(link);
     });
-};
+}
 
 function populateTable(table, res) {
-    const row = document.createElement('tr');
-    table.appendChild(row);
-    const columns = [];
+    const headerRow = document.createElement('tr');
     res.fields.forEach((element) => {
-        columns.push(element.name);
         const header = document.createElement('th');
-        row.appendChild(header);
         const text = document.createTextNode(element.name);
         header.appendChild(text);
+        headerRow.appendChild(header);
     });
+    table.appendChild(headerRow);
     res.rows.forEach((element) => {
-        const row = document.createElement('tr');
-        table.appendChild(row);
-        columns.forEach((column) => {
+        const dataRow = document.createElement('tr');
+        for (let key in element) {
             const data = document.createElement('td');
-            row.appendChild(data);
-            const text = document.createTextNode(element[column]);
+            const text = document.createTextNode(element[key]);
             data.appendChild(text);
-        });
+            dataRow.appendChild(data);
+        };
+        table.appendChild(dataRow);
     });
 };
 
