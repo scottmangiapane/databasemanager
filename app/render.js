@@ -3,6 +3,8 @@ const { ipcRenderer } = require('electron');
 const Store = require('electron-store');
 const { Pool } = require('pg');
 
+const limit = 250;
+
 dotenv.load();
 
 const pool = new Pool({
@@ -15,8 +17,10 @@ const pool = new Pool({
 });
 const store = new Store();
 
-const consoleButton = document.getElementById('consoleButton');
+const backButton = document.getElementById('back-button');
+const consoleButton = document.getElementById('console-button');
 const darkTheme = document.createElement('link');
+const forwardButton = document.getElementById('forward-button');
 const main = document.getElementById('main');
 const sidebar = document.getElementById('sidebar');
 const title = document.getElementById('title');
@@ -26,6 +30,8 @@ darkTheme.href = 'resources/style-dark.css';
 darkTheme.rel = 'stylesheet';
 darkTheme.type = 'text/css';
 title.innerHTML = process.env.DB_NAME;
+
+let state = new Object;
 
 ipcRenderer.on('update-theme', loadTheme);
 ipcRenderer.on('reload', reload);
@@ -39,8 +45,8 @@ function loadConsole() {
         + '<textarea id="query-input">\n'
         + '</textarea>\n'
         + '<div class="bar-right">\n'
-        + '<input id="historyButton" type="button" value="History">\n'
-        + '<input id="executeButton" type="button" value="Execute">\n'
+        + '<input id="history-button" type="button" value="History">\n'
+        + '<input id="execute-button" type="button" value="Execute">\n'
         + '</div>\n'
         + '<div class="clear">\n'
         + '</div>\n'
@@ -50,7 +56,7 @@ function loadConsole() {
         + '<p id="query-output">\n'
         + '</p>\n'
         + '</div>\n';
-    const executeButton = document.getElementById('executeButton');
+    const executeButton = document.getElementById('execute-button');
     const queryInput = CodeMirror.fromTextArea(document.getElementById('query-input'), {
         autofocus: true,
         lineNumbers: true,
@@ -99,13 +105,22 @@ function populateSidebar(res) {
         const text = document.createTextNode(' ' + element.table_name);
         link.onclick = () => {
             main.innerHTML = '';
-            table = document.createElement('table');
-            query('SELECT * FROM ' + element.table_name + ' LIMIT 250;', (err, res) => {
-                if (!err) {
-                    populateTable(res);
-                    main.appendChild(table);
-                }
-            });
+            query('SELECT count(*) AS exact_count FROM ' + element.table_name + ';',
+                (err, res) => {
+                    if (!err) {
+                        state.offset = 0;
+                        state.table_name = element.table_name;
+                        state.total = res.rows[0].exact_count;
+                        table = document.createElement('table');
+                        query('SELECT * FROM ' + element.table_name + ' LIMIT ' + limit + ';',
+                            (err, res) => {
+                                if (!err) {
+                                    populateTable(res);
+                                    main.appendChild(table);
+                                }
+                            });
+                    }
+                });
         };
         item.classList += 'sidebar-item';
         icon.classList += 'sidebar-icon';
@@ -139,6 +154,38 @@ function populateTable(res) {
         };
         table.appendChild(dataRow);
     });
+    backButton.disabled = true;
+    if (state.offset > 0) {
+        backButton.disabled = false;
+        backButton.onclick = () => {
+            main.innerHTML = '';
+            query('SELECT * FROM ' + state.table_name + ' LIMIT ' + limit + ' OFFSET ' + (state.offset - limit) + ';',
+                (err, res) => {
+                    if (!err) {
+                        state.offset -= limit;
+                        table = document.createElement('table');
+                        populateTable(res);
+                        main.appendChild(table);
+                    }
+                });
+        };
+    }
+    forwardButton.disabled = true;
+    if (state.total > state.offset + limit) {
+        forwardButton.disabled = false;
+        forwardButton.onclick = () => {
+            main.innerHTML = '';
+            query('SELECT * FROM ' + state.table_name + ' LIMIT ' + limit + ' OFFSET ' + (state.offset + limit) + ';',
+                (err, res) => {
+                    if (!err) {
+                        state.offset += limit;
+                        table = document.createElement('table');
+                        populateTable(res);
+                        main.appendChild(table);
+                    }
+                });
+        };
+    }
 };
 
 function query(statement, callback) {
