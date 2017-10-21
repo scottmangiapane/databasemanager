@@ -66,6 +66,13 @@ app.on('ready', () => {
                         }
                         window.webContents.send('update-theme');
                     }
+                },
+                {
+                    label: 'Reload',
+                    accelerator: 'CmdOrCtrl+R',
+                    click() {
+                        window.webContents.send('reload');
+                    }
                 }
             ]
         }

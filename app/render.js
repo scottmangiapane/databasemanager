@@ -27,13 +27,11 @@ darkTheme.rel = 'stylesheet';
 darkTheme.type = 'text/css';
 title.innerHTML = process.env.DB_NAME;
 
-loadTheme();
 ipcRenderer.on('update-theme', loadTheme);
+ipcRenderer.on('reload', reload);
 
-query('SELECT table_name, table_type FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name;',
-    (err, res) => {
-        if (!err) populateSidebar(sidebar, res);
-    });
+loadTheme();
+reload();
 
 function loadConsole() {
     main.innerHTML = ''
@@ -72,10 +70,11 @@ function loadConsole() {
                 queryOutput.appendChild(message);
             } else {
                 queryOutput.innerHTML = '';
-                const table = document.createElement('table');
-                populateTable(table, res);
+                table = document.createElement('table');
+                populateTable(res);
                 queryOutput.appendChild(table);
             }
+            reload();
         });
     }
 }
@@ -91,7 +90,7 @@ function loadTheme() {
     }
 }
 
-function populateSidebar(sidebar, res) {
+function populateSidebar(res) {
     sidebar.innerHTML = '';
     res.rows.forEach((element) => {
         const link = document.createElement('a');
@@ -100,10 +99,10 @@ function populateSidebar(sidebar, res) {
         const text = document.createTextNode(' ' + element.table_name);
         link.onclick = () => {
             main.innerHTML = '';
-            const table = document.createElement('table');
+            table = document.createElement('table');
             query('SELECT * FROM ' + element.table_name + ' LIMIT 250;', (err, res) => {
                 if (!err) {
-                    populateTable(table, res);
+                    populateTable(res);
                     main.appendChild(table);
                 }
             });
@@ -121,7 +120,7 @@ function populateSidebar(sidebar, res) {
     });
 }
 
-function populateTable(table, res) {
+function populateTable(res) {
     const headerRow = document.createElement('tr');
     res.fields.forEach((element) => {
         const header = document.createElement('th');
@@ -150,4 +149,11 @@ function query(statement, callback) {
             callback(err, res);
         })
     });
+}
+
+function reload() {
+    query('SELECT table_name, table_type FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name;',
+        (err, res) => {
+            if (!err) populateSidebar(res);
+        });
 }
