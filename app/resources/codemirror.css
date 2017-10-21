@@ -2,10 +2,16 @@
  * Modified version of lesser-dark
  */
 
+@import url('sourcecodepro/source-code-pro.css');
+
 .cm-s-custom { line-height: 1.3em; }
 .cm-s-custom pre { padding: 0 8px; }
 
-.cm-s-custom.CodeMirror { background: transparent; height: calc(100% - 38px); }
+.cm-s-custom.CodeMirror {
+    background: transparent;
+    font-family: 'Source Code Pro';
+    height: calc(100% - 38px);
+}
 .cm-s-custom.CodeMirror span.CodeMirror-matchingbracket { color: #7EFC7E; }
 
 .cm-s-custom .CodeMirror-cursor { border-color: #777; }

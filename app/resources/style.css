@@ -1,10 +1,9 @@
+@import url('sourcecodepro/source-code-pro.css');
+
 * {
-    color: WindowText;
-    font: caption;
+    font: inherit;
     margin: 0;
     padding: 0;
-    user-select: none;
-    -webkit-user-select: none;
 }
 
 a {
@@ -15,7 +14,11 @@ a {
 
 body, html {
     background-color: Window;
+    color: WindowText;
     height: 100%;
+    font: caption;
+    user-select: none;
+    -webkit-user-select: none;
     width: 100%;
 }
 
@@ -51,7 +54,7 @@ li:hover {
 
 table {
     border-collapse: collapse;
-    min-width: 100%;
+    font-family: 'Source Code Pro';
 }
 
 td, th {
