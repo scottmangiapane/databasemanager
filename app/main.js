@@ -13,7 +13,7 @@ app.on('ready', () => {
         height: 500,
         minWidth: 600,
         minHeight: 200,
-        backgroundColor: (store.get('darkTheme')) ? '#282828' : '#FFFFFF',
+        backgroundColor: (store.get('darkTheme')) ? '#292929' : '#FFFFFF',
         show: false,
         title: 'Database Manager',
         titleBarStyle: 'hidden'

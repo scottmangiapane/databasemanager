@@ -28,6 +28,7 @@ hr {
 }
 
 input {
+    -webkit-app-region: no-drag;
     background-color: white;
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 4px;
@@ -59,9 +60,9 @@ table {
 
 td, th {
     border: 1px solid rgba(0, 0, 0, 0.05);
-    max-width: 200px;
+    max-width: 400px;
     overflow: hidden;
-    padding: 6px;
+    padding: 6px 8px;
     text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -78,12 +79,12 @@ ul {
 
 .bar-left {
     float: left;
-    padding: 6px;
+    padding: 2px 8px;
 }
 
 .bar-right {
     float: right;
-    padding: 6px;
+    padding: 2px 8px;
 }
 
 .center {
@@ -104,7 +105,7 @@ ul {
 }
 
 .error-message {
-    margin: 6px;
+    margin: 8px;
 }
 
 .main {
@@ -115,15 +116,15 @@ ul {
     overflow: auto;
 }
 
-.menubar {
+.titlebar {
     -webkit-app-region: drag;
     height: 22px;
 }
 
 .navbar {
+    -webkit-app-region: drag;
     height: 38px;
-    margin-left: 200px;
-    width: calc(100% - 200px - 1px);
+    width: calc(100%);
 }
 
 .selected {
@@ -132,7 +133,7 @@ ul {
 
 .sidebar {
     float: left;
-    height: calc(100% - 22px);
+    height: calc(100% - 22px - 38px);
     overflow-y: auto;
     width: 200px;
 }
@@ -143,7 +144,7 @@ ul {
 }
 
 .sidebar-item {
-    padding: 6px;
+    padding: 6px 8px;
     white-space: nowrap;
 }
 

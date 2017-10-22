@@ -29,18 +29,24 @@ consoleButton.onclick = loadConsole;
 darkTheme.href = 'resources/style-dark.css';
 darkTheme.rel = 'stylesheet';
 darkTheme.type = 'text/css';
-title.innerHTML = process.env.DB_NAME;
+title.innerText = process.env.DB_NAME;
 
 let state = new Object;
 let table = document.getElementById('table');
 
 ipcRenderer.on('update-theme', loadTheme);
-ipcRenderer.on('reload', loadTable); // TODO
+ipcRenderer.on('reload', () => {
+    loadSidebar();
+    loadTable();
+});
 
 loadTheme();
 loadSidebar();
 
 function loadConsole() {
+    state.offset = undefined;
+    state.table_name = undefined;
+    state.total = undefined;
     backButton.disabled = true;
     forwardButton.disabled = true;
     main.innerHTML = ''
@@ -56,9 +62,6 @@ function loadConsole() {
         + '<div class="vertical-half">\n'
         + '<table id="table"></table>\n'
         + '</div>\n';
-    state.offset = undefined;
-    state.table_name = undefined;
-    state.total = undefined;
     table = document.getElementById('table');
     const executeButton = document.getElementById('execute-button');
     const queryInput = CodeMirror.fromTextArea(document.getElementById('query-input'), {
@@ -86,10 +89,10 @@ function loadTheme() {
 }
 
 function loadSidebar() {
-    sidebar.innerHTML = '';
     query('SELECT table_name, table_type FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name;',
         (err, res) => {
-            if (!err) {
+            if (err) showError(err.message);
+            else {
                 sidebar.innerHTML = '';
                 res.rows.forEach((element) => {
                     const link = document.createElement('a');
@@ -102,7 +105,8 @@ function loadSidebar() {
                         main.appendChild(table);
                         query('SELECT count(*) AS exact_count FROM ' + element.table_name + ';',
                             (err, res) => {
-                                if (!err) {
+                                if (err) showError(err.message);
+                                else {
                                     state.offset = 0;
                                     state.query = undefined;
                                     state.table_name = element.table_name;
@@ -128,7 +132,6 @@ function loadSidebar() {
 
 function loadTable() {
     const parent = table.parentNode;
-    parent.innerHTML = '';
     backButton.disabled = true;
     forwardButton.disabled = true;
     let queryString = state.query;
@@ -152,38 +155,31 @@ function loadTable() {
     query(queryString,
         (err, res) => {
             table = document.createElement('table');
-            if (err) {
-                const message = document.createElement('p');
-                const messageText = document.createTextNode(err.message);
-                message.classList += 'error-message';
-                message.appendChild(messageText)
-                table.appendChild(message);
-            } else
-                populateTable(res);
+            if (err) showError(err.message);
+            else {
+                const headerRow = document.createElement('tr');
+                res.fields.forEach((element) => {
+                    const header = document.createElement('th');
+                    const text = document.createTextNode(element.name);
+                    header.appendChild(text);
+                    headerRow.appendChild(header);
+                });
+                table.appendChild(headerRow);
+                res.rows.forEach((element) => {
+                    const dataRow = document.createElement('tr');
+                    for (let key in element) {
+                        const data = document.createElement('td');
+                        const text = document.createTextNode(element[key]);
+                        data.appendChild(text);
+                        dataRow.appendChild(data);
+                    };
+                    table.appendChild(dataRow);
+                });
+            }
+            parent.innerHTML = '';
             parent.appendChild(table);
         });
 }
-
-function populateTable(res) {
-    const headerRow = document.createElement('tr');
-    res.fields.forEach((element) => {
-        const header = document.createElement('th');
-        const text = document.createTextNode(element.name);
-        header.appendChild(text);
-        headerRow.appendChild(header);
-    });
-    table.appendChild(headerRow);
-    res.rows.forEach((element) => {
-        const dataRow = document.createElement('tr');
-        for (let key in element) {
-            const data = document.createElement('td');
-            const text = document.createTextNode(element[key]);
-            data.appendChild(text);
-            dataRow.appendChild(data);
-        };
-        table.appendChild(dataRow);
-    });
-};
 
 function query(statement, callback) {
     pool.connect((err, client, done) => {
@@ -193,4 +189,13 @@ function query(statement, callback) {
             callback(err, res);
         })
     });
+}
+
+function showError(text) {
+    const message = document.createElement('p');
+    const messageText = document.createTextNode(text);
+    message.classList += 'error-message';
+    message.appendChild(messageText);
+    table.innerHTML = '';
+    table.appendChild(message);
 }
