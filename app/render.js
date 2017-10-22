@@ -32,30 +32,34 @@ darkTheme.type = 'text/css';
 title.innerHTML = process.env.DB_NAME;
 
 let state = new Object;
+let table = document.getElementById('table');
 
 ipcRenderer.on('update-theme', loadTheme);
-ipcRenderer.on('reload', reload);
+ipcRenderer.on('reload', loadTable); // TODO
 
 loadTheme();
-reload();
+loadSidebar();
 
 function loadConsole() {
+    backButton.disabled = true;
+    forwardButton.disabled = true;
     main.innerHTML = ''
         + '<div class="vertical-half">\n'
-        + '<textarea id="query-input">\n'
-        + '</textarea>\n'
+        + '<textarea id="query-input"></textarea>\n'
         + '<div class="bar-right">\n'
         + '<input id="history-button" type="button" value="History">\n'
         + '<input id="execute-button" type="button" value="Execute">\n'
         + '</div>\n'
-        + '<div class="clear">\n'
-        + '</div>\n'
+        + '<div class="clear"></div>\n'
         + '<hr>\n'
         + '</div>\n'
         + '<div class="vertical-half">\n'
-        + '<p id="query-output">\n'
-        + '</p>\n'
+        + '<table id="table"></table>\n'
         + '</div>\n';
+    state.offset = undefined;
+    state.table_name = undefined;
+    state.total = undefined;
+    table = document.getElementById('table');
     const executeButton = document.getElementById('execute-button');
     const queryInput = CodeMirror.fromTextArea(document.getElementById('query-input'), {
         autofocus: true,
@@ -64,24 +68,9 @@ function loadConsole() {
         tabSize: 4,
         theme: 'custom'
     });
-    const queryOutput = document.getElementById('query-output');
     executeButton.onclick = () => {
-        query(queryInput.getValue(), (err, res) => {
-            if (err) {
-                queryOutput.innerHTML = '';
-                const message = document.createElement('p');
-                const messageText = document.createTextNode(err.message);
-                message.classList += 'error-message';
-                message.appendChild(messageText)
-                queryOutput.appendChild(message);
-            } else {
-                queryOutput.innerHTML = '';
-                table = document.createElement('table');
-                populateTable(res);
-                queryOutput.appendChild(table);
-            }
-            reload();
-        });
+        state.query = queryInput.getValue();
+        loadTable();
     }
 }
 
@@ -96,43 +85,83 @@ function loadTheme() {
     }
 }
 
-function populateSidebar(res) {
+function loadSidebar() {
     sidebar.innerHTML = '';
-    res.rows.forEach((element) => {
-        const link = document.createElement('a');
-        const item = document.createElement('li');
-        const icon = document.createElement('img');
-        const text = document.createTextNode(' ' + element.table_name);
-        link.onclick = () => {
-            main.innerHTML = '';
-            query('SELECT count(*) AS exact_count FROM ' + element.table_name + ';',
-                (err, res) => {
-                    if (!err) {
-                        state.offset = 0;
-                        state.table_name = element.table_name;
-                        state.total = res.rows[0].exact_count;
+    query('SELECT table_name, table_type FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name;',
+        (err, res) => {
+            if (!err) {
+                sidebar.innerHTML = '';
+                res.rows.forEach((element) => {
+                    const link = document.createElement('a');
+                    const item = document.createElement('li');
+                    const icon = document.createElement('img');
+                    const text = document.createTextNode(' ' + element.table_name);
+                    link.onclick = () => {
+                        main.innerHTML = '';
                         table = document.createElement('table');
-                        query('SELECT * FROM ' + element.table_name + ' LIMIT ' + limit + ';',
+                        main.appendChild(table);
+                        query('SELECT count(*) AS exact_count FROM ' + element.table_name + ';',
                             (err, res) => {
                                 if (!err) {
-                                    populateTable(res);
-                                    main.appendChild(table);
+                                    state.offset = 0;
+                                    state.query = undefined;
+                                    state.table_name = element.table_name;
+                                    state.total = res.rows[0].exact_count;
+                                    loadTable();
                                 }
                             });
-                    }
+                    };
+                    item.classList += 'sidebar-item';
+                    icon.classList += 'sidebar-icon';
+                    if (element.table_type === 'BASE TABLE')
+                        icon.src = 'resources/table.svg';
+                    if (element.table_type === 'VIEW')
+                        icon.src = 'resources/view.svg';
+                    item.appendChild(icon);
+                    item.appendChild(text);
+                    link.appendChild(item);
+                    sidebar.appendChild(link);
                 });
-        };
-        item.classList += 'sidebar-item';
-        icon.classList += 'sidebar-icon';
-        if (element.table_type === 'BASE TABLE')
-            icon.src = 'resources/table.svg';
-        if (element.table_type === 'VIEW')
-            icon.src = 'resources/view.svg';
-        item.appendChild(icon);
-        item.appendChild(text);
-        link.appendChild(item);
-        sidebar.appendChild(link);
-    });
+            }
+        });
+}
+
+function loadTable() {
+    const parent = table.parentNode;
+    parent.innerHTML = '';
+    backButton.disabled = true;
+    forwardButton.disabled = true;
+    let queryString = state.query;
+    if (!queryString) {
+        queryString = 'SELECT * FROM ' + state.table_name + ' LIMIT ' + limit + ' OFFSET ' + state.offset + ';'
+        if (state.offset > 0) {
+            backButton.disabled = false;
+            backButton.onclick = () => {
+                state.offset -= limit;
+                loadTable();
+            };
+        }
+        if (state.total > state.offset + limit) {
+            forwardButton.disabled = false;
+            forwardButton.onclick = () => {
+                state.offset += limit;
+                loadTable();
+            };
+        }
+    }
+    query(queryString,
+        (err, res) => {
+            table = document.createElement('table');
+            if (err) {
+                const message = document.createElement('p');
+                const messageText = document.createTextNode(err.message);
+                message.classList += 'error-message';
+                message.appendChild(messageText)
+                table.appendChild(message);
+            } else
+                populateTable(res);
+            parent.appendChild(table);
+        });
 }
 
 function populateTable(res) {
@@ -154,38 +183,6 @@ function populateTable(res) {
         };
         table.appendChild(dataRow);
     });
-    backButton.disabled = true;
-    if (state.offset > 0) {
-        backButton.disabled = false;
-        backButton.onclick = () => {
-            main.innerHTML = '';
-            query('SELECT * FROM ' + state.table_name + ' LIMIT ' + limit + ' OFFSET ' + (state.offset - limit) + ';',
-                (err, res) => {
-                    if (!err) {
-                        state.offset -= limit;
-                        table = document.createElement('table');
-                        populateTable(res);
-                        main.appendChild(table);
-                    }
-                });
-        };
-    }
-    forwardButton.disabled = true;
-    if (state.total > state.offset + limit) {
-        forwardButton.disabled = false;
-        forwardButton.onclick = () => {
-            main.innerHTML = '';
-            query('SELECT * FROM ' + state.table_name + ' LIMIT ' + limit + ' OFFSET ' + (state.offset + limit) + ';',
-                (err, res) => {
-                    if (!err) {
-                        state.offset += limit;
-                        table = document.createElement('table');
-                        populateTable(res);
-                        main.appendChild(table);
-                    }
-                });
-        };
-    }
 };
 
 function query(statement, callback) {
@@ -196,11 +193,4 @@ function query(statement, callback) {
             callback(err, res);
         })
     });
-}
-
-function reload() {
-    query('SELECT table_name, table_type FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name;',
-        (err, res) => {
-            if (!err) populateSidebar(res);
-        });
 }
