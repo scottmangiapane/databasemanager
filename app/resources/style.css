@@ -122,6 +122,10 @@ ul {
     overflow: auto;
 }
 
+.null-cell {
+    filter: opacity(40%);
+}
+
 .titlebar {
     -webkit-app-region: drag;
     height: 22px;

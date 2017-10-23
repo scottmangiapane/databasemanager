@@ -21,6 +21,7 @@ const backButton = document.getElementById('back-button');
 const consoleButton = document.getElementById('console-button');
 const darkTheme = document.createElement('link');
 const forwardButton = document.getElementById('forward-button');
+const nullCell = document.createElement('p');
 const main = document.getElementById('main');
 const sidebar = document.getElementById('sidebar');
 const title = document.getElementById('title');
@@ -29,6 +30,8 @@ consoleButton.onclick = loadConsole;
 darkTheme.href = 'resources/style-dark.css';
 darkTheme.rel = 'stylesheet';
 darkTheme.type = 'text/css';
+nullCell.innerText = 'NULL';
+nullCell.classList += 'null-cell'
 title.innerText = process.env.DB_NAME;
 
 let state = new Object;
@@ -172,8 +175,12 @@ function loadTable() {
                     const dataRow = document.createElement('tr');
                     for (let key in element) {
                         const data = document.createElement('td');
-                        const text = document.createTextNode(element[key]);
-                        data.appendChild(text);
+                        if (element[key] === null)
+                            data.appendChild(nullCell.cloneNode(true));
+                        else {
+                            const text = document.createTextNode(element[key]);
+                            data.appendChild(text);
+                        }
                         dataRow.appendChild(data);
                     };
                     table.appendChild(dataRow);
