@@ -109,7 +109,7 @@ function loadSidebar() {
                         main.innerHTML = '';
                         table = document.createElement('table');
                         main.appendChild(table);
-                        query('SELECT count(*) AS exact_count FROM ' + element.table_name + ';',
+                        query('SELECT count(*) AS exact_count FROM "' + element.table_name + '";',
                             (err, res) => {
                                 if (err) showError(err.message);
                                 else {
@@ -142,7 +142,7 @@ function loadTable() {
     forwardButton.disabled = true;
     let queryString = state.query;
     if (!queryString) {
-        queryString = 'SELECT * FROM ' + state.table_name + ' LIMIT ' + limit + ' OFFSET ' + state.offset + ';'
+        queryString = 'SELECT * FROM "' + state.table_name + '" LIMIT ' + limit + ' OFFSET ' + state.offset + ';'
         if (state.offset > 0) {
             backButton.disabled = false;
             backButton.onclick = () => {
