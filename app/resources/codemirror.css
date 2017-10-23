@@ -10,7 +10,7 @@
 .cm-s-custom.CodeMirror {
     background: transparent;
     font-family: 'Source Code Pro';
-    height: calc(100% - 38px);
+    height: calc(100% - 24px - 16px - 1px);
 }
 .cm-s-custom.CodeMirror span.CodeMirror-matchingbracket { color: #7EFC7E; }
 

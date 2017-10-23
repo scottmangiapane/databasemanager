@@ -23,8 +23,8 @@ body, html {
 }
 
 hr {
-    border-top: 1px solid #777;
     border-bottom: none;
+    border-top: 1px solid #777;
 }
 
 input {
@@ -60,12 +60,14 @@ li:hover {
 }
 
 table {
-    border-collapse: collapse;
+    border-spacing: 0;
     font-family: 'Source Code Pro';
 }
 
 td, th {
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
     max-width: 400px;
     overflow: hidden;
     padding: 6px 8px;
@@ -75,8 +77,14 @@ td, th {
 }
 
 th {
+    background-color: white;
+    box-sizing: border-box;
     color: #2196F3;
     font-weight: bold;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 10;
 }
 
 ul {
@@ -85,12 +93,12 @@ ul {
 
 .bar-left {
     float: left;
-    padding: 2px 8px;
+    padding: 8px;
 }
 
 .bar-right {
     float: right;
-    padding: 2px 8px;
+    padding: 8px;
 }
 
 .center {
@@ -133,8 +141,12 @@ ul {
 
 .navbar {
     -webkit-app-region: drag;
-    height: 38px;
+    height: 37px;
     width: calc(100%);
+}
+
+.navbar .bar-left, .navbar .bar-right {
+    padding: 4px 8px;
 }
 
 .selected {

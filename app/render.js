@@ -72,6 +72,7 @@ function loadConsole() {
     const executeButton = document.getElementById('execute-button');
     const queryInput = CodeMirror.fromTextArea(document.getElementById('query-input'), {
         autofocus: true,
+        indentWithTabs: true,
         lineNumbers: true,
         mode: 'text/x-pgsql',
         tabSize: 4,
@@ -197,7 +198,7 @@ function query(statement, callback) {
         client.query(statement, (err, res) => {
             done();
             callback(err, res);
-        })
+        });
     });
 }
 
