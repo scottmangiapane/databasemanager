@@ -64,6 +64,15 @@ table {
     font-family: 'Source Code Pro';
 }
 
+table input[type=text] {
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    min-height: initial;
+    padding: 0;
+    width: 100%;
+}
+
 td, th {
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     border-right: 1px solid rgba(0, 0, 0, 0.05);

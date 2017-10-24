@@ -182,6 +182,30 @@ function loadTable() {
                             const text = document.createTextNode(element[key]);
                             data.appendChild(text);
                         }
+                        data.ondblclick = () => {
+                            const input = document.createElement('input');
+                            input.type = 'text';
+                            input.value = data.innerText;
+                            input.onblur = () => {
+                                data.innerHTML = '';
+                                data.style.boxShadow = '';
+                                const text = document.createTextNode(element[key]);
+                                data.appendChild(text);
+                                return false;
+                            }
+                            input.onkeypress = (event) => {
+                                if (event.key === 'Enter') {
+                                    data.innerHTML = '';
+                                    const text = document.createTextNode(input.value);
+                                    data.appendChild(text);
+                                    return false;
+                                }
+                            };
+                            data.innerHTML = '';
+                            data.appendChild(input);
+                            data.style.boxShadow = 'inset 0 0 0 2px #2196F3';
+                            input.select();
+                        }
                         dataRow.appendChild(data);
                     };
                     table.appendChild(dataRow);
