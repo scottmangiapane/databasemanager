@@ -1,0 +1,110 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a, li {
+    font-family: inherit;
+    line-height: inherit;
+    margin: inherit;
+}
+
+body, html {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+footer {
+    background-color: #212121;
+    color: #6a6a6a;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Roboto Condensed';
+}
+
+h1 {
+    font-size: 48pt;
+}
+
+header {
+    background-color: #2196F3;
+    color: white;
+    text-align: center;
+}
+
+p {
+    color: #767676;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.button {
+    background-color: #212121;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px rgba(0, 0, 0, 0.5);
+    color: white;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px;
+    text-decoration: none;
+}
+
+.button:active {
+    box-shadow: none;
+    transform: translateY(4px);
+}
+
+.button:focus {
+    outline: none;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.container {
+    margin: auto;
+    padding: 64px;
+}
+
+.screenshot {
+    display: inline-block;
+    filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.5));
+    text-align: center;
+    transform-style: preserve-3d;
+    transition: all .2s ease-in-out;
+    width: 80%;
+}
+
+/* Phones */
+@media only screen and (min-width: 576px) {
+    .container {
+        max-width: 540px;
+    }
+}
+
+/* Tablets */
+@media only screen and (min-width: 768px) {
+    .container {
+        max-width: 720px;
+    }
+}
+
+/* Desktops and laptops */
+@media only screen  and (min-width : 992px) {
+    .container {
+        max-width: 960px;
+    }
+}
+
+/* Large screens */
+@media only screen  and (min-width : 1200px) {
+    .container {
+        max-width: 1140px;
+    }
+}
