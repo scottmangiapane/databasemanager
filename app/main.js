@@ -19,15 +19,20 @@ app.on('ready', () => {
         titleBarStyle: 'hidden'
     });
 
-    window.loadURL(url.format({
-        pathname: path.join(__dirname, 'window.html'),
-        protocol: 'file:'
-    }));
-
     window.on('ready-to-show', () => {
         window.show();
         window.focus();
     });
+
+    window.webContents.executeJavaScript('require(\'electron\').webFrame.setZoomLevelLimits(1, 1);');
+    window.webContents.on('will-navigate', (event) => {
+        event.preventDefault();
+    });
+
+    window.loadURL(url.format({
+        pathname: path.join(__dirname, 'window.html'),
+        protocol: 'file:'
+    }));
 
     Menu.setApplicationMenu(Menu.buildFromTemplate([
         {
