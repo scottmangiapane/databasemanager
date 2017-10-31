@@ -12,7 +12,7 @@ a {
     text-decoration: inherit;
 }
 
-body, html {
+body, html, #app {
     background-color: Window;
     color: WindowText;
     height: 100%;
@@ -125,17 +125,17 @@ ul {
     clear: both;
 }
 
-.error-message {
-    margin: 8px;
-}
-
-.main {
+.dashboard {
     background-color: white;
     border-left: 1px solid rgba(0, 0, 0, 0.2);
     border-top: 1px solid rgba(0, 0, 0, 0.2);
     height: calc(100% - 22px - 38px - 1px);
     margin-left: 200px;
     overflow: auto;
+}
+
+.error-message {
+    margin: 8px;
 }
 
 .null-cell {
@@ -188,6 +188,10 @@ ul {
 .vertical-half {
     height: 50%;
     overflow: auto;
+}
+
+.vertical-full {
+    height: 100%;
 }
 
 ::-webkit-scrollbar {

@@ -3,34 +3,32 @@ const Store = require('electron-store');
 const path = require('path');
 const url = require('url');
 
-let window;
+let mainWindow;
 
 const store = new Store();
 
 app.on('ready', () => {
-    window = new BrowserWindow({
+    mainWindow = new BrowserWindow({
         width: 800,
         height: 500,
         minWidth: 600,
         minHeight: 200,
         backgroundColor: (store.get('darkTheme')) ? '#292929' : '#FFFFFF',
-        show: false,
         title: 'Database Manager',
         titleBarStyle: 'hidden'
     });
 
-    window.on('ready-to-show', () => {
-        window.show();
-        window.focus();
+    mainWindow.on('closed', () => {
+        mainWindow = null;
     });
 
-    window.webContents.executeJavaScript('require(\'electron\').webFrame.setZoomLevelLimits(1, 1);');
-    window.webContents.on('will-navigate', (event) => {
+    mainWindow.webContents.executeJavaScript('require(\'electron\').webFrame.setZoomLevelLimits(1, 1);');
+    mainWindow.webContents.on('will-navigate', (event) => {
         event.preventDefault();
     });
 
-    window.loadURL(url.format({
-        pathname: path.join(__dirname, 'window.html'),
+    mainWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'index.html'),
         protocol: 'file:'
     }));
 
@@ -58,7 +56,7 @@ app.on('ready', () => {
                     label: 'Developer Tools',
                     accelerator: 'CmdOrCtrl+Option+I',
                     click() {
-                        window.toggleDevTools();
+                        mainWindow.toggleDevTools();
                     }
                 },
                 {
@@ -70,17 +68,21 @@ app.on('ready', () => {
                         } else {
                             store.set('darkTheme', 'true');
                         }
-                        window.webContents.send('update-theme');
+                        mainWindow.webContents.send('update-theme');
                     }
                 },
                 {
                     label: 'Reload',
                     accelerator: 'CmdOrCtrl+R',
                     click() {
-                        window.webContents.send('reload');
+                        mainWindow.webContents.send('reload');
                     }
                 }
             ]
         }
     ]));
+});
+
+app.on('window-all-closed', () => {
+    app.quit();
 });
