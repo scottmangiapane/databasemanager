@@ -1,20 +1,23 @@
 @import url('sourcecodepro/source-code-pro.css');
 
 * {
+    color: inherit;
     font: inherit;
     margin: 0;
     padding: 0;
 }
 
 a {
-    color: inherit;
     cursor: pointer;
     text-decoration: inherit;
 }
 
-body, html, #app {
+#app {
     background-color: Window;
     color: WindowText;
+}
+
+body, html, #app {
     height: 100%;
     font: caption;
     user-select: none;
@@ -185,13 +188,14 @@ ul {
     white-space: nowrap;
 }
 
-.vertical-half {
-    height: 50%;
+.vertical-full {
+    height: 100%;
     overflow: auto;
 }
 
-.vertical-full {
-    height: 100%;
+.vertical-half {
+    height: 50%;
+    overflow: auto;
 }
 
 ::-webkit-scrollbar {

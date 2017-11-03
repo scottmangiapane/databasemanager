@@ -9,6 +9,7 @@
 
 .cm-s-custom.CodeMirror {
     background: transparent;
+    color: inherit;
     font-family: 'Source Code Pro';
     height: calc(100% - 24px - 16px - 1px);
 }

@@ -41,7 +41,7 @@ module.exports = {
     ],
     externals: {
         "fs": "commonjs fs",
-        "pg": "commonjs pg",
+        "pg": "commonjs pg"
     },
     target: "node"
 };

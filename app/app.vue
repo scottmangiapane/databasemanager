@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app" v-bind:class="{dark: dark}">
         <titlebar></titlebar>
         <navbar v-bind:state="state"></navbar>
         <sidebar v-bind:state="state"></sidebar>
@@ -38,6 +38,7 @@ export default {
   },
   data() {
     return {
+      dark: true,
       state: state
     };
   }

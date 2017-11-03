@@ -1,56 +1,53 @@
-* {
+.dark#app {
+    background-color: #292929;
     color: rgba(255, 255, 255, 0.87);
 }
 
-body, html, #window {
-    background-color: #292929;
-}
-
-input {
+.dark input {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-input[type=button]:active {
+.dark input[type=button]:active {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-li:hover {
+.dark li:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
-table input[type=text] {
+.dark table input[type=text] {
     background-color: transparent;
 }
 
-td, th {
+.dark td, .dark th {
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-th {
+.dark th {
     background-color: #1C1C1C;
 }
 
-.dashboard {
+.dark .dashboard {
     background-color: #1C1C1C;
 }
 
-.selected {
+.dark .selected {
     background-color: rgba(255, 255, 255, 0.9);
 }
 
-::-webkit-scrollbar {
+.dark ::-webkit-scrollbar {
     background-color: #282828;
 }
 
-::-webkit-scrollbar-corner {
+.dark ::-webkit-scrollbar-corner {
     background-color: #282828;
 }
 
-::-webkit-scrollbar-thumb {
+.dark ::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-::-webkit-scrollbar-thumb:active {
+.dark ::-webkit-scrollbar-thumb:active {
     background-color: rgba(255, 255, 255, 0.4);
 }
