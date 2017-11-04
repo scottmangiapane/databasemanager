@@ -39,9 +39,5 @@ module.exports = {
             'electron'
         ])
     ],
-    externals: {
-        "fs": "commonjs fs",
-        "pg": "commonjs pg"
-    },
-    target: "node"
+    target: "electron"
 };

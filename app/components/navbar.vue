@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "navbar",
-  props: ["state"]
+    name: 'navbar',
+    props: ['state']
 };
 </script>

@@ -6,15 +6,15 @@
 </template>
 
 <script>
-import console from "./console.vue";
-import database from "./database.vue";
+import console from './console.vue';
+import database from './database.vue';
 
 export default {
-  name: "dashboard",
-  components: {
-    console,
-    database
-  },
-  props: ["state"]
+    name: 'dashboard',
+    components: {
+        console,
+        database
+    },
+    props: ['state']
 };
 </script>

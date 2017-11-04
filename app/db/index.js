@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
-import { Pool } from 'pg';
+const dotenv = window.require('dotenv');
+const { Pool } = window.require('pg');
 
 dotenv.load();
 

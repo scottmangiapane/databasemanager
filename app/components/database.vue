@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "database",
-  props: ["state"]
+    name: 'database',
+    props: ['state']
 };
 </script>

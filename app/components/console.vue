@@ -16,29 +16,29 @@
 </template>
 
 <script>
-import { codemirror } from "vue-codemirror-lite";
-import "codemirror/lib/codemirror";
-import "codemirror/mode/sql/sql";
-import database from "./database.vue";
+import { codemirror } from 'vue-codemirror-lite';
+import 'codemirror/lib/codemirror';
+import 'codemirror/mode/sql/sql';
+import database from './database.vue';
 
 export default {
-  name: "console",
-  components: {
-    codemirror,
-    database
-  },
-  data() {
-    return {
-      code: "SELECT * FROM city\n\tLIMIT 50;",
-      editorOptions: {
-        autofocus: true,
-        indentWithTabs: true,
-        lineNumbers: true,
-        mode: "text/x-sql",
-        tabSize: 4,
-        theme: "custom"
-      }
-    };
-  }
+    name: 'console',
+    components: {
+        codemirror,
+        database
+    },
+    data() {
+        return {
+            code: 'SELECT * FROM city\n\tLIMIT 50;',
+            editorOptions: {
+                autofocus: true,
+                indentWithTabs: true,
+                lineNumbers: true,
+                mode: 'text/x-sql',
+                tabSize: 4,
+                theme: 'custom'
+            }
+        };
+    }
 };
 </script>

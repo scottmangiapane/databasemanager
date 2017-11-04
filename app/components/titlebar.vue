@@ -6,6 +6,6 @@
 
 <script>
 export default {
-  name: "titlebar"
+    name: 'titlebar'
 };
 </script>
