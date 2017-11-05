@@ -13,7 +13,7 @@ app.on('ready', () => {
         height: 500,
         minWidth: 600,
         minHeight: 200,
-        backgroundColor: (store.get('darkTheme')) ? '#292929' : '#FFFFFF',
+        backgroundColor: (store.get('dark')) ? '#292929' : '#FFFFFF',
         title: 'Database Manager',
         titleBarStyle: 'hidden'
     });
@@ -63,12 +63,12 @@ app.on('ready', () => {
                     label: 'Invert',
                     accelerator: 'CmdOrCtrl+I',
                     click() {
-                        if (store.get('darkTheme')) {
-                            store.delete('darkTheme');
+                        if (store.get('dark')) {
+                            store.delete('dark');
                         } else {
-                            store.set('darkTheme', 'true');
+                            store.set('dark', 'true');
                         }
-                        mainWindow.webContents.send('update-theme');
+                        mainWindow.webContents.send('invert');
                     }
                 },
                 {

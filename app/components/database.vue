@@ -3,7 +3,7 @@
         <p v-if="state.table.error" class="error-message">{{ state.table.error }}</p>
         <table v-if="!state.table.error">
             <tr>
-                <th v-for="header in state.table.headers" track-by="$index">{{ header }}</th>
+                <th v-for="field in state.table.fields" track-by="$index">{{ field }}</th>
             </tr>
             <tr v-for="row in rowsVisible" track-by="$index">
                 <td v-for="item in row" track-by="$index">

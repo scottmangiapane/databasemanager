@@ -1,16 +1,16 @@
 <template>
     <div class="vertical-full">
         <div class="vertical-half">
+            <database v-bind:state="state"></database>
+        </div>
+        <div class="vertical-half">
+            <hr>
             <codemirror v-model="code" v-bind:options="editorOptions"></codemirror>
             <div class="bar-right">
                 <input id="history-button" type="button" value="History">
                 <input id="execute-button" type="button" value="Execute">
             </div>
             <div class="clear"></div>
-            <hr>
-        </div>
-        <div class="vertical-half">
-            <database></database>
         </div>
     </div>
 </template>
@@ -27,6 +27,7 @@ export default {
         codemirror,
         database
     },
+    props: ['state'],
     data() {
         return {
             code: 'SELECT * FROM city\n\tLIMIT 50;',

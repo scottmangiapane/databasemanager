@@ -42,10 +42,10 @@ export default {
                 this.state.table.offset = 0;
                 if (err) console.log(err.message);
                 else {
-                    this.state.table.headers = [];
+                    this.state.table.fields = [];
                     this.state.table.rows = [];
                     res.fields.forEach(element => {
-                        this.state.table.headers.push(element.name);
+                        this.state.table.fields.push(element.name);
                     });
                     res.rows.forEach(element => {
                         let row = [];

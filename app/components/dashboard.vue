@@ -1,6 +1,6 @@
 <template>
     <div class="dashboard">
-        <console v-if="state.mode === 'console'"></console>
+        <console v-if="state.mode === 'console'" v-bind:state="state"></console>
         <database v-if="state.mode === 'table'" v-bind:state="state"></database>
     </div>
 </template>
