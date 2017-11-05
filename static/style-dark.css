@@ -11,10 +11,6 @@
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-.dark li:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
 .dark table input[type=text] {
     background-color: transparent;
 }

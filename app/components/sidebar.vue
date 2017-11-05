@@ -2,7 +2,7 @@
     <div class="sidebar">
         <ul>
             <a v-for="item in state.sidebar" v-bind:key="item.name" v-on:click="loadTable(item)">
-                <li class="sidebar-item" v-bind:class="{selected: item.active}">
+                <li class="sidebar-item" v-bind:class="{'sidebar-selected': item.name === state.table.name}">
                     <img v-if="item.type === 'BASE TABLE'" class="sidebar-icon" src="../../static/table.svg">
                     <img v-if="item.type === 'VIEW'" class="sidebar-icon" src="../../static/view.svg">
                     {{ item.name }}
@@ -26,8 +26,7 @@ export default {
                     res.rows.forEach(element => {
                         const item = {
                             name: element.table_name,
-                            type: element.table_type,
-                            active: false
+                            type: element.table_type
                         };
                         this.state.sidebar.push(item);
                     });
@@ -39,6 +38,7 @@ export default {
         loadTable: function (item) {
             query('SELECT * FROM "' + item.name + '";', (err, res) => {
                 this.state.mode = 'table';
+                this.state.table.name = item.name;
                 this.state.table.offset = 0;
                 if (err) console.log(err.message);
                 else {

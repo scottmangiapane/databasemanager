@@ -24,6 +24,7 @@ const state = {
     table: {
         error: '',
         fields: [],
+        name: '',
         query: '',
         rows: [],
         offset: 0
