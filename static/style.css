@@ -142,7 +142,7 @@ ul {
 }
 
 .null-cell {
-    filter: opacity(40%);
+    filter: opacity(0.4);
 }
 
 .titlebar {
@@ -160,10 +160,6 @@ ul {
     padding: 4px 8px;
 }
 
-.selected {
-    background-color: rgba(0, 0, 0, 0.9);
-}
-
 .sidebar {
     float: left;
     height: calc(100% - 22px - 38px);
@@ -179,6 +175,10 @@ ul {
 .sidebar-item {
     padding: 6px 8px;
     white-space: nowrap;
+}
+
+.sidebar-selected {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .truncate {

@@ -18,16 +18,12 @@ const store = new Store();
 
 let state = {
     mode: 'table',
-    query: {
-        string: '',
-        page: 0,
-        pages: 0
-    },
     sidebar: [],
     table: {
         error: '',
         headers: [],
-        rows: []
+        rows: [],
+        offset: 0
     }
 };
 

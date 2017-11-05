@@ -2,10 +2,10 @@
     <div class="sidebar">
         <ul>
             <a v-for="item in state.sidebar" v-bind:key="item.name" v-on:click="loadTable(item)">
-                <li class="sidebar-item">
-                    <img v-if="item.table_type === 'BASE TABLE'" class="sidebar-icon" src="../../static/table.svg">
-                    <img v-if="item.table_type === 'VIEW'" class="sidebar-icon" src="../../static/view.svg">
-                    {{ item.table_name }}
+                <li class="sidebar-item" v-bind:class="{selected: item.active}">
+                    <img v-if="item.type === 'BASE TABLE'" class="sidebar-icon" src="../../static/table.svg">
+                    <img v-if="item.type === 'VIEW'" class="sidebar-icon" src="../../static/view.svg">
+                    {{ item.name }}
                 </li>
             </a>
         </ul>
@@ -25,8 +25,9 @@ export default {
                 else {
                     res.rows.forEach(element => {
                         const item = {
-                            table_name: element.table_name,
-                            table_type: element.table_type
+                            name: element.table_name,
+                            type: element.table_type,
+                            active: false
                         };
                         this.state.sidebar.push(item);
                     });
@@ -36,7 +37,9 @@ export default {
     },
     methods: {
         loadTable: function (item) {
-            query('SELECT * FROM "' + item.table_name + '";', (err, res) => {
+            query('SELECT * FROM "' + item.name + '";', (err, res) => {
+                this.state.mode = 'table';
+                this.state.table.offset = 0;
                 if (err) console.log(err.message);
                 else {
                     this.state.table.headers = [];
