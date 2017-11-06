@@ -20,7 +20,7 @@ export default {
     name: 'database',
     computed: {
         rowsVisible: function () {
-            return this.state.table.rows.slice(this.state.table.offset, this.state.table.offset + 200);
+            return this.state.table.rows.slice(this.state.table.offset, this.state.table.offset + 1000);
         }
     },
     props: ['state']

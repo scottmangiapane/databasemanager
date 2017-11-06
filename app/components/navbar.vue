@@ -6,10 +6,10 @@
         <div class="bar-right">
             <input id="back-button" type="button" value="<"
                     v-bind:disabled="this.state.table.offset === 0"
-                    v-on:click="this.state.table.offset -= 200">
+                    v-on:click="this.state.table.offset -= 1000">
             <input id="forward-button" type="button" value=">"
-                    v-bind:disabled="this.state.table.rows.length - this.state.table.offset <= 200"
-                    v-on:click="this.state.table.offset += 200">
+                    v-bind:disabled="this.state.table.rows.length - this.state.table.offset <= 1000"
+                    v-on:click="this.state.table.offset += 1000">
         </div>
     </div>
 </template>

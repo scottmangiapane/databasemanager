@@ -31,7 +31,7 @@ module.exports = {
         ]
     },
     babel: {
-        "presets": ["es2015"],
+        "presets": ["env"],
         "plugins": ["transform-runtime"]
     },
     plugins: [

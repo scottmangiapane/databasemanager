@@ -49,7 +49,7 @@ input[type=button]:active {
 }
 
 input[type=button]:disabled {
-    filter: opacity(0.5);
+    opacity: 0.5;
 }
 
 input:focus {
@@ -138,7 +138,7 @@ ul {
 }
 
 .null-cell {
-    filter: opacity(0.4);
+    opacity: 0.4;
 }
 
 .titlebar {

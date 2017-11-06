@@ -11,7 +11,7 @@ app.on('ready', () => {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 500,
-        minWidth: 600,
+        minWidth: 400,
         minHeight: 200,
         backgroundColor: (store.get('dark')) ? '#292929' : '#FFFFFF',
         title: 'Database Manager',
