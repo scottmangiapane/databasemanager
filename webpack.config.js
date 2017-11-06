@@ -8,36 +8,32 @@ module.exports = {
         publicPath: 'build/',
         filename: 'build.js'
     },
+    resolve: {
+        alias: {
+            vue: 'vue/dist/vue.js'
+        }
+    },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.css$/,
-                loader: 'css'
+                loader: 'css-loader'
             },
             {
                 test: /\.vue$/,
-                loader: 'vue'
+                loader: 'vue-loader'
             },
             {
                 test: /\.js$/,
-                loader: 'babel',
+                loader: 'babel-loader',
                 exclude: /node_modules/
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file',
+                loader: 'file-loader',
                 exclude: /node_modules/
             }
         ]
     },
-    babel: {
-        "presets": ["env"],
-        "plugins": ["transform-runtime"]
-    },
-    plugins: [
-        new webpack.ExternalsPlugin('commonjs', [
-            'electron'
-        ])
-    ],
     target: "electron"
 };

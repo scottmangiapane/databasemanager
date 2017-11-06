@@ -2,6 +2,6 @@ import Vue from 'vue';
 import app from './app.vue';
 
 new Vue({
-    el: 'body',
+    el: 'app',
     components: { app }
 });

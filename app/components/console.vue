@@ -7,8 +7,8 @@
             <hr>
             <codemirror v-model="code" v-bind:options="editorOptions"></codemirror>
             <div class="bar-right">
-                <input id="history-button" type="button" value="History">
-                <input id="execute-button" type="button" value="Execute">
+                <input type="button" value="History">
+                <input type="button" value="Execute">
             </div>
             <div class="clear"></div>
         </div>
@@ -30,7 +30,7 @@ export default {
     props: ['state'],
     data() {
         return {
-            code: 'SELECT * FROM city\n\tLIMIT 50;',
+            code: '',
             editorOptions: {
                 autofocus: true,
                 indentWithTabs: true,
