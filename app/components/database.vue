@@ -7,7 +7,7 @@
             </tr>
             <tr v-for="row in rowsVisible" track-by="$index">
                 <td v-for="item in row" track-by="$index">
-                    <p v-if="!item" class="null-cell">NULL</p>
+                    <p v-if="item === null" class="null-cell">NULL</p>
                     {{ item }}
                 </td>
             </tr>
