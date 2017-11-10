@@ -1,9 +1,9 @@
 <template>
     <div>
-        <p v-if="state.table.error" class="error-message">{{ state.table.error }}</p>
-        <table v-if="!state.table.error">
+        <p v-if="table.error" class="error-message">{{ table.error }}</p>
+        <table v-if="!table.error">
             <tr>
-                <th v-for="field in state.table.fields" track-by="$index">{{ field }}</th>
+                <th v-for="field in table.fields" track-by="$index">{{ field }}</th>
             </tr>
             <tr v-for="row in rowsVisible" track-by="$index">
                 <td v-for="item in row" track-by="$index">
@@ -19,10 +19,12 @@
 export default {
     name: 'database',
     computed: {
-        rowsVisible: function () {
-            return this.state.table.rows.slice(this.state.table.offset, this.state.table.offset + 500);
+        rowsVisible() {
+            return this.$store.getters.rowsVisible
+        },
+        table() {
+            return this.$store.state.table;
         }
-    },
-    props: ['state']
+    }
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div class="dashboard">
-        <console v-if="state.mode === 'console'" v-bind:state="state"></console>
-        <database v-if="state.mode === 'table'" v-bind:state="state"></database>
+        <console v-if="mode === 'console'"></console>
+        <database v-if="mode === 'table'"></database>
     </div>
 </template>
 
@@ -15,6 +15,10 @@ export default {
         console,
         database
     },
-    props: ['state']
+    computed: {
+        mode() {
+            return this.$store.state.mode;
+        }
+    }
 };
 </script>

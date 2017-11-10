@@ -1,7 +1,7 @@
 <template>
     <div class="vertical-full">
         <div class="vertical-half">
-            <database v-bind:state="state"></database>
+            <database></database>
         </div>
         <div class="vertical-half">
             <hr>
@@ -27,7 +27,6 @@ export default {
         codemirror,
         database
     },
-    props: ['state'],
     data() {
         return {
             code: '',

@@ -1,11 +1,11 @@
 const { app, BrowserWindow, Menu } = require('electron');
-const Store = require('electron-store');
+const Settings = require('electron-store');
 const path = require('path');
 const url = require('url');
 
 let mainWindow;
 
-const store = new Store();
+const settings = new Settings();
 
 app.on('ready', () => {
     mainWindow = new BrowserWindow({
@@ -13,7 +13,7 @@ app.on('ready', () => {
         height: 500,
         minWidth: 400,
         minHeight: 200,
-        backgroundColor: (store.get('dark')) ? '#292929' : '#FFFFFF',
+        backgroundColor: (settings.get('dark')) ? '#292929' : '#FFFFFF',
         title: 'Database Manager',
         titleBarStyle: 'hidden'
     });
@@ -63,10 +63,10 @@ app.on('ready', () => {
                     label: 'Invert',
                     accelerator: 'CmdOrCtrl+I',
                     click() {
-                        if (store.get('dark')) {
-                            store.delete('dark');
+                        if (settings.get('dark')) {
+                            settings.delete('dark');
                         } else {
-                            store.set('dark', 'true');
+                            settings.set('dark', 'true');
                         }
                         mainWindow.webContents.send('invert');
                     }

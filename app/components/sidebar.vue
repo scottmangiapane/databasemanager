@@ -1,8 +1,8 @@
 <template>
     <div class="sidebar">
         <ul>
-            <a v-for="item in state.sidebar" v-bind:key="item.name" v-on:click="loadTable(item)">
-                <li class="sidebar-item" v-bind:class="{'sidebar-selected': item.name === state.table.name}">
+            <a v-for="item in tables" v-bind:key="item.name" v-on:click="loadTable(item.name)">
+                <li class="sidebar-item" v-bind:class="{'sidebar-selected': item.name === table.name}">
                     <img v-if="item.type === 'BASE TABLE'" class="sidebar-icon" src="../../static/table.svg">
                     <img v-if="item.type === 'VIEW'" class="sidebar-icon" src="../../static/view.svg">
                     {{ item.name }}
@@ -13,51 +13,12 @@
 </template>
 
 <script>
-import { query } from '../db';
+import { mapActions } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
     name: 'sidebar',
-    created: function () {
-        query(
-            'SELECT table_name, table_type FROM information_schema.tables WHERE table_schema=\'public\' ORDER BY table_name;',
-            (err, res) => {
-                if (err) console.log(err.message);
-                else {
-                    res.rows.forEach(element => {
-                        const item = {
-                            name: element.table_name,
-                            type: element.table_type
-                        };
-                        this.state.sidebar.push(item);
-                    });
-                }
-            }
-        );
-    },
-    methods: {
-        loadTable: function (item) {
-            query('SELECT * FROM "' + item.name + '";', (err, res) => {
-                this.state.mode = 'table';
-                this.state.table.name = item.name;
-                this.state.table.offset = 0;
-                if (err) console.log(err.message);
-                else {
-                    this.state.table.fields = [];
-                    this.state.table.rows = [];
-                    res.fields.forEach(element => {
-                        this.state.table.fields.push(element.name);
-                    });
-                    res.rows.forEach(element => {
-                        let row = [];
-                        for (let key in element) {
-                            row.push(element[key]);
-                        }
-                        this.state.table.rows.push(row);
-                    });
-                }
-            });
-        }
-    },
-    props: ['state']
+    computed: mapState(['table', 'tables']),
+    methods: mapActions(['loadTable'])
 };
 </script>
