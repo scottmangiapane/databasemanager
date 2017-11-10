@@ -12,7 +12,6 @@ const settings = new Settings();
 
 const state = {
     dark: settings.get('dark'),
-    mode: 'console',
     table: {
         error: '',
         fields: [],
@@ -21,7 +20,8 @@ const state = {
         rows: [],
         offset: 0
     },
-    tables: []
+    tables: [],
+    view: 'console'
 };
 
 export default new Vuex.Store({

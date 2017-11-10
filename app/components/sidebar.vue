@@ -13,8 +13,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
     name: 'sidebar',

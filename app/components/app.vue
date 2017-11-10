@@ -23,7 +23,7 @@ import titlebar from './titlebar.vue';
 export default {
     name: 'app',
     created: function () {
-        this.$store.dispatch('loadTables');
+        this.$store.dispatch('loadTableList');
     },
     components: {
         dashboard,

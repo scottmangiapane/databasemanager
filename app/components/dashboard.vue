@@ -1,7 +1,7 @@
 <template>
     <div class="dashboard">
-        <console v-if="mode === 'console'"></console>
-        <database v-if="mode === 'table'"></database>
+        <console v-if="view === 'console'"></console>
+        <database v-if="view === 'table'"></database>
     </div>
 </template>
 
@@ -16,8 +16,8 @@ export default {
         database
     },
     computed: {
-        mode() {
-            return this.$store.state.mode;
+        view() {
+            return this.$store.state.view;
         }
     }
 };
