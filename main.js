@@ -1,5 +1,6 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const Settings = require('electron-store');
+const windowState = require('electron-window-state');
 const path = require('path');
 const url = require('url');
 
@@ -8,9 +9,16 @@ let mainWindow;
 const settings = new Settings();
 
 app.on('ready', () => {
+    let mainWindowState = windowState({
+        defaultWidth: 800,
+        defaultHeight: 500
+    });
+
     mainWindow = new BrowserWindow({
-        width: 800,
-        height: 500,
+        x: mainWindowState.x,
+        y: mainWindowState.y,
+        width: mainWindowState.width,
+        height: mainWindowState.height,
         minWidth: 400,
         minHeight: 200,
         backgroundColor: (settings.get('dark')) ? '#292929' : '#FFFFFF',
@@ -31,6 +39,8 @@ app.on('ready', () => {
         pathname: path.join(__dirname, 'index.html'),
         protocol: 'file:'
     }));
+
+    mainWindowState.manage(mainWindow);
 
     Menu.setApplicationMenu(Menu.buildFromTemplate([
         {
