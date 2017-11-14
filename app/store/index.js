@@ -12,6 +12,7 @@ const settings = new Settings();
 
 const state = {
     dark: settings.get('dark'),
+    sidebarItems: [],
     table: {
         error: '',
         fields: [],
@@ -20,7 +21,6 @@ const state = {
         rows: [],
         offset: 0
     },
-    tables: [],
     view: 'console'
 };
 

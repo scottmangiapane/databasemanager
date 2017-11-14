@@ -1,6 +1,6 @@
 <template>
-    <div class="center titlebar">
-        <p class="truncate">Database Manager</p>
+    <div class="center-content titlebar">
+        <p>Database Manager</p>
     </div>
 </template>
 

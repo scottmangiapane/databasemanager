@@ -8,7 +8,7 @@
             <codemirror v-model="code" v-bind:options="editorOptions"></codemirror>
             <div class="bar-right">
                 <input type="button" value="History">
-                <input type="button" value="Execute">
+                <input type="button" value="Execute" v-on:click="loadTable(code)">
             </div>
             <div class="clear"></div>
         </div>
@@ -17,6 +17,7 @@
 
 <script>
 import { codemirror } from 'vue-codemirror-lite';
+import { mapActions } from 'vuex';
 import 'codemirror/lib/codemirror';
 import 'codemirror/mode/sql/sql';
 import database from './database.vue';
@@ -39,6 +40,7 @@ export default {
                 theme: 'custom'
             }
         };
-    }
+    },
+    methods: mapActions(['loadTable'])
 };
 </script>

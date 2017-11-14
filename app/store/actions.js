@@ -1,11 +1,11 @@
 import * as db from '../db';
 
-export const loadTable = ({ commit }, name) => {
+export const loadTable = ({ commit }, query) => {
     commit('CLEAR_TABLE');
-    const query = 'SELECT * FROM "' + name + '";';
     db.query(query, (err, res) => {
-        if (err) console.log(err.message);
-        else {
+        if (err) {
+            commit('LOAD_ERROR', { error: err.message });
+        } else {
             const fields = res.fields.map(field => {
                 return field.name;
             });
@@ -17,16 +17,28 @@ export const loadTable = ({ commit }, name) => {
     });
 };
 
-export const loadTableList = ({ commit }) => {
+export const loadTableView = ({ commit }, name) => {
+    commit('OPEN_TABLE_VIEW');
+    const query = 'SELECT * FROM "' + name + '";';
+    loadTable({ commit }, query);
+};
+
+export const loadSidebar = ({ commit }) => {
     const query = 'SELECT table_name, table_type FROM information_schema.tables '
         + 'WHERE table_schema=\'public\' ORDER BY table_name;';
     db.query(query, (err, res) => {
-        if (err) console.log(err.message);
-        else {
-            const tables = res.rows.map(table => {
+        if (err) {
+            commit('LOAD_ERROR', err.message);
+        } else {
+            const sidebarItems = res.rows.map(table => {
                 return { name: table.table_name, type: table.table_type };
             });
-            commit('LOAD_TABLE_LIST', { tables });
+            commit('LOAD_SIDEBAR_ITEMS', { sidebarItems });
         }
     });
 };
+
+export const openConsoleView = ({ commit }) => {
+    commit('CLEAR_TABLE');
+    commit('OPEN_CONSOLE_VIEW');
+}

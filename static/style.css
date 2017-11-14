@@ -12,11 +12,6 @@ a {
     text-decoration: inherit;
 }
 
-#app {
-    background-color: #ECECEC;
-    color: WindowText;
-}
-
 body, html, #app {
     height: 100%;
     font: caption;
@@ -97,6 +92,28 @@ ul {
     list-style-type: none;
 }
 
+::-webkit-scrollbar {
+    background-color: #ECECEC;
+    height: 14px;
+    width: 14px;
+}
+
+::-webkit-scrollbar-corner {
+    background-color: #ECECEC;
+}
+
+::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    border: 3px solid transparent;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
 .bar-left {
     float: left;
     padding: 8px;
@@ -107,7 +124,7 @@ ul {
     padding: 8px;
 }
 
-.center {
+.center-content {
     align-items: center;
     display: flex;
     flex-direction: row;
@@ -115,7 +132,7 @@ ul {
     width: 100%;
 }
 
-.center > * {
+.center-content > * {
     flex: 1;
     text-align: center;
 }
@@ -177,13 +194,6 @@ ul {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-.truncate {
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 .vertical-full {
     height: 100%;
     overflow: auto;
@@ -194,24 +204,7 @@ ul {
     overflow: auto;
 }
 
-::-webkit-scrollbar {
+#app {
     background-color: #ECECEC;
-    height: 14px;
-    width: 14px;
-}
-
-::-webkit-scrollbar-corner {
-    background-color: #ECECEC;
-}
-
-::-webkit-scrollbar-thumb {
-    background-clip: padding-box;
-    background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 7px;
-    -webkit-border-radius: 7px;
-    border: 3px solid transparent;
-}
-
-::-webkit-scrollbar-thumb:active {
-    background-color: rgba(0, 0, 0, 0.4);
+    color: WindowText;
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="navbar">
         <div class="bar-left">
-            <input v-on:click="view = 'console'" type="button" value="Console">
+            <input type="button" value="Console" v-on:click="openConsoleView()">
         </div>
         <div class="bar-right">
             <input type="button" value="<"
@@ -15,10 +15,11 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 export default {
     name: 'navbar',
-    computed: mapState(['view', 'table'])
+    computed: mapState(['view', 'table']),
+    methods: mapActions(['openConsoleView'])
 };
 </script>

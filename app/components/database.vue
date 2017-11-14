@@ -3,10 +3,10 @@
         <p v-if="table.error" class="error-message">{{ table.error }}</p>
         <table v-if="!table.error">
             <tr>
-                <th v-for="field in table.fields" track-by="$index">{{ field }}</th>
+                <th v-for="field in table.fields">{{ field }}</th>
             </tr>
-            <tr v-for="row in rowsVisible" track-by="$index">
-                <td v-for="item in row" track-by="$index">
+            <tr v-for="row in rowsVisible">
+                <td v-for="item in row">
                     <p v-if="item === null" class="null-cell">NULL</p>
                     {{ item }}
                 </td>
