@@ -5,7 +5,6 @@ export default {
         state.table = {
             error: '',
             fields: [],
-            name: '',
             query: '',
             rows: [],
             offset: 0
@@ -14,23 +13,27 @@ export default {
     ['LOAD_ERROR'](state, { error }) {
         state.table.error = error;
     },
-    ['LOAD_TABLE'](state, { name, query, fields, rows }) {
+    ['LOAD_TABLE'](state, { query, fields, rows }) {
         state.table = {
             error: '',
             fields: fields,
-            name: name,
             query: query,
             rows: rows,
             offset: 0
         };
     },
-    ['LOAD_SIDEBAR_ITEMS'](state, { sidebarItems }) {
-        state.sidebarItems = sidebarItems;
+    ['LOAD_SIDEBAR'](state, { items }) {
+        state.sidebar = {
+            items: items,
+            selected: ''
+        };
     },
     ['OPEN_CONSOLE_VIEW'](state) {
+        state.sidebar.selected = '';
         state.view = 'console';
     },
-    ['OPEN_TABLE_VIEW'](state) {
+    ['OPEN_TABLE_VIEW'](state, { name }) {
+        state.sidebar.selected = name;
         state.view = 'table';
     }
 }

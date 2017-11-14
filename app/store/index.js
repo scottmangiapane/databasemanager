@@ -12,11 +12,13 @@ const settings = new Settings();
 
 const state = {
     dark: settings.get('dark'),
-    sidebarItems: [],
+    sidebar: {
+        items: [],
+        selected: ''
+    },
     table: {
         error: '',
         fields: [],
-        name: '',
         query: '',
         rows: [],
         offset: 0

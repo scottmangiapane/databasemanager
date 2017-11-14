@@ -1,9 +1,9 @@
 <template>
     <div class="sidebar">
         <ul>
-            <a v-for="item in sidebarItems" v-bind:key="item.name"
+            <a v-for="item in sidebar.items" v-bind:key="item.name"
                 v-on:click="loadTableView(item.name)">
-                <li class="sidebar-item" v-bind:class="{'sidebar-selected': item.name === table.name}">
+                <li class="sidebar-item" v-bind:class="{ 'sidebar-selected': item.name === sidebar.selected }">
                     <img v-if="item.type === 'BASE TABLE'" class="sidebar-icon" src="../../static/table.svg">
                     <img v-if="item.type === 'VIEW'" class="sidebar-icon" src="../../static/view.svg">
                     {{ item.name }}
@@ -18,7 +18,7 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
     name: 'sidebar',
-    computed: mapState(['sidebarItems', 'table']),
+    computed: mapState(['sidebar', 'table']),
     methods: mapActions(['loadTableView'])
 };
 </script>
