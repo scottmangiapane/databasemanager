@@ -10,6 +10,9 @@ export default {
             offset: 0
         };
     },
+    ['INVERT'](state) {
+        state.dark = !state.dark;
+    },
     ['LOAD_ERROR'](state, { error }) {
         state.table.error = error;
     },

@@ -8,17 +8,12 @@
 </template>
 
 <script>
-// const { ipcRenderer } = window.require('electron');
+import { ipcRenderer } from 'electron';
 
 import dashboard from './dashboard.vue';
 import navbar from './navbar.vue';
 import sidebar from './sidebar.vue';
 import titlebar from './titlebar.vue';
-
-// ipcRenderer.on('invert', () => {
-//     state.dark = !state.dark;
-// });
-// ipcRenderer.on('reload', () => { /* todo */ });
 
 export default {
     name: 'app',
@@ -35,6 +30,11 @@ export default {
         dark() {
             return this.$store.state.dark;
         }
+    },
+    mounted() {
+        ipcRenderer.on('invert', () => {
+            this.$store.commit('INVERT');
+        });
     }
 };
 </script>

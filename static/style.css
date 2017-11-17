@@ -154,15 +154,6 @@ ul {
     margin: 8px;
 }
 
-.null-cell {
-    opacity: 0.4;
-}
-
-.titlebar {
-    -webkit-app-region: drag;
-    height: 22px;
-}
-
 .navbar {
     -webkit-app-region: drag;
     height: 37px;
@@ -171,6 +162,10 @@ ul {
 
 .navbar .bar-left, .navbar .bar-right {
     padding: 4px 8px;
+}
+
+.null-cell {
+    opacity: 0.4;
 }
 
 .sidebar {
@@ -192,6 +187,11 @@ ul {
 
 .sidebar-selected {
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+.titlebar {
+    -webkit-app-region: drag;
+    height: 22px;
 }
 
 .vertical-full {
