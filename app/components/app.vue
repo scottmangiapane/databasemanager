@@ -9,7 +9,6 @@
 
 <script>
 import { ipcRenderer } from 'electron';
-
 import dashboard from './dashboard.vue';
 import navbar from './navbar.vue';
 import sidebar from './sidebar.vue';

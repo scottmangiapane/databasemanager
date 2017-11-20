@@ -28,7 +28,6 @@ export const getColumns = (name, schema, callback) => {
     query(statement, callback);
 };
 
-// TODO use
 export const getTables = (callback) => {
     const statement = `
         SELECT table_schema AS schema,

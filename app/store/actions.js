@@ -1,15 +1,18 @@
 import * as db from '../db';
 
 export const loadSidebar = ({ commit }) => {
-    const query = 'SELECT table_name, table_type FROM information_schema.tables '
-        + 'WHERE table_schema=\'public\' ORDER BY table_name;';
-    db.query(query, (err, res) => {
+    db.getTables((err, res) => {
         if (err) {
             commit('LOAD_ERROR', { error: err.message });
         } else {
-            const items = res.rows.map(table => {
-                return { name: table.table_name, type: table.table_type };
+            let items = {};
+            res.rows.forEach(item => {
+                if (!items[item.schema])
+                    items[item.schema] = [];
+                else
+                    items[item.schema].push({ name: item.name, type: item.type });
             });
+            console.log(items);
             commit('LOAD_SIDEBAR', { items });
         }
     });
