@@ -93,13 +93,13 @@ ul {
 }
 
 ::-webkit-scrollbar {
-    background-color: #ECECEC;
+    background-color: transparent;
     height: 14px;
     width: 14px;
 }
 
 ::-webkit-scrollbar-corner {
-    background-color: #ECECEC;
+    background-color: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -176,13 +176,16 @@ ul {
 }
 
 .sidebar-icon {
-    height: 1em;
     width: 1em;
 }
 
 .sidebar-item {
     padding: 6px 8px;
     white-space: nowrap;
+}
+
+.sidebar-item-margin {
+    margin-left: 1em;
 }
 
 .sidebar-selected {

@@ -35,8 +35,8 @@ export default {
         state.sidebar.selected = '';
         state.view = 'console';
     },
-    ['OPEN_TABLE_VIEW'](state, { name }) {
-        state.sidebar.selected = name;
+    ['OPEN_TABLE_VIEW'](state, { schema, name }) {
+        state.sidebar.selected = { schema, name };
         state.view = 'table';
     }
 }

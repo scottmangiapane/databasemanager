@@ -12,7 +12,6 @@ export const loadSidebar = ({ commit }) => {
                 else
                     items[item.schema].push({ name: item.name, type: item.type });
             });
-            console.log(items);
             commit('LOAD_SIDEBAR', { items });
         }
     });
@@ -35,9 +34,9 @@ export const loadTable = ({ commit }, query) => {
     });
 };
 
-export const loadTableView = ({ commit }, name) => {
-    commit('OPEN_TABLE_VIEW', { name: name });
-    const query = 'SELECT * FROM "' + name + '";';
+export const loadTableView = ({ commit }, { schema, name }) => {
+    commit('OPEN_TABLE_VIEW', { schema, name });
+    const query = 'SELECT * FROM "' + schema + '"."' + name + '";';
     loadTable({ commit }, query);
 };
 
