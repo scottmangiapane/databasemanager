@@ -7,10 +7,12 @@ export const loadSidebar = ({ commit }) => {
         } else {
             let items = {};
             res.rows.forEach(item => {
-                if (!items[item.schema])
-                    items[item.schema] = [];
-                else
-                    items[item.schema].push({ name: item.name, type: item.type });
+                if (!items[item.schema]) {
+                    items[item.schema] = { name: item.schema, isOpen: false, content: [] };
+                    if (items[item.schema].name === 'public')
+                        items[item.schema].isOpen = true;
+                }
+                items[item.schema].content.push({ name: item.name, type: item.type });
             });
             commit('LOAD_SIDEBAR', { items });
         }
@@ -43,4 +45,8 @@ export const loadTableView = ({ commit }, { schema, name }) => {
 export const openConsoleView = ({ commit }) => {
     commit('CLEAR_TABLE');
     commit('OPEN_CONSOLE_VIEW');
+}
+
+export const openSidebarFolder = ({ commit }, schema) => {
+    commit('OPEN_SIDEBAR_FOLDER', { schema });
 }

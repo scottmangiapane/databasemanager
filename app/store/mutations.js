@@ -38,5 +38,8 @@ export default {
     ['OPEN_TABLE_VIEW'](state, { schema, name }) {
         state.sidebar.selected = { schema, name };
         state.view = 'table';
+    },
+    ['OPEN_SIDEBAR_FOLDER'](state, { schema }) {
+        state.sidebar.items[schema].isOpen = !state.sidebar.items[schema].isOpen;
     }
 }

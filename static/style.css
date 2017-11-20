@@ -146,7 +146,7 @@ ul {
     border-left: 1px solid rgba(0, 0, 0, 0.2);
     border-top: 1px solid rgba(0, 0, 0, 0.2);
     height: calc(100% - 22px - 38px - 1px);
-    margin-left: 200px;
+    margin-left: 220px;
     overflow: auto;
 }
 
@@ -172,11 +172,11 @@ ul {
     float: left;
     height: calc(100% - 22px - 38px);
     overflow-y: auto;
-    width: 200px;
+    width: 220px;
 }
 
 .sidebar-icon {
-    width: 1em;
+    height: 1em;
 }
 
 .sidebar-item {
@@ -185,7 +185,7 @@ ul {
 }
 
 .sidebar-item-margin {
-    margin-left: 1em;
+    margin-left: 1.5em;
 }
 
 .sidebar-selected {

@@ -13,7 +13,7 @@ const settings = new Settings();
 const state = {
     dark: settings.get('dark'),
     sidebar: {
-        items: [],
+        items: {},
         selected: ''
     },
     table: {
