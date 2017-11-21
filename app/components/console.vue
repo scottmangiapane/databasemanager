@@ -7,7 +7,6 @@
             <hr>
             <codemirror v-model="code" v-bind:options="editorOptions"></codemirror>
             <div class="bar-right">
-                <input type="button" value="History">
                 <input type="button" value="Execute" v-on:click="loadTable(code)">
             </div>
             <div class="clear"></div>

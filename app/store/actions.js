@@ -7,12 +7,13 @@ export const loadSidebar = ({ commit }) => {
         } else {
             let items = {};
             res.rows.forEach(item => {
-                if (!items[item.schema]) {
-                    items[item.schema] = { name: item.schema, isOpen: false, content: [] };
-                    if (items[item.schema].name === 'public')
-                        items[item.schema].isOpen = true;
+                if (!items[item[0]]) {
+                    items[item[0]] = { name: item[0], isOpen: false, content: [] };
+                    if (items[item[0]].name === 'public') {
+                        items[item[0]].isOpen = true;
+                    }
                 }
-                items[item.schema].content.push({ name: item.name, type: item.type });
+                items[item[0]].content.push({ name: item[2], type: item[1] });
             });
             commit('LOAD_SIDEBAR', { items });
         }
@@ -28,10 +29,7 @@ export const loadTable = ({ commit }, query) => {
             const fields = res.fields.map(field => {
                 return field.name;
             });
-            const rows = res.rows.map(row => {
-                return Object.values(row);
-            });
-            commit('LOAD_TABLE', { query, fields, rows });
+            commit('LOAD_TABLE', { query, fields, rows: res.rows });
         }
     });
 };

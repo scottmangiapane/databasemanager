@@ -177,10 +177,11 @@ ul {
 
 .sidebar-icon {
     height: 1em;
+    margin-right: 4px;
 }
 
 .sidebar-item {
-    padding: 6px 8px;
+    padding: 6px 6px;
     white-space: nowrap;
 }
 

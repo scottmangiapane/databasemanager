@@ -41,9 +41,13 @@ export const getTables = (callback) => {
 }
 
 export const query = (statement, callback) => {
+    const queryObject = {
+        text: statement,
+        rowMode: 'array'
+    };
     pool.connect((err, client, done) => {
         if (err) throw err;
-        client.query(statement, (err, res) => {
+        client.query(queryObject, (err, res) => {
             done();
             callback(err, res);
         });
