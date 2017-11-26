@@ -14,13 +14,13 @@
                 <div v-if="sidebar.items[category].isOpen">
                     <a v-for="item in sidebar.items[category].content"
                         v-on:click="loadTableView({schema: category, name: item.name})">
-                        <li class="sidebar-item"
+                        <li class="sidebar-item sidebar-item-table"
                                 v-bind:class="{ 'sidebar-selected': item.name === sidebar.selected.name }">
                             <img v-if="item.type === 'BASE TABLE'"
-                                    class="sidebar-icon sidebar-item-margin"
+                                    class="sidebar-icon"
                                     src="../../static/table.svg">
                             <img v-if="item.type === 'VIEW'"
-                                    class="sidebar-icon sidebar-item-margin"
+                                    class="sidebar-icon"
                                     src="../../static/view.svg">
                             {{ item.name }}
                         </li>

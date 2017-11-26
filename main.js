@@ -82,10 +82,10 @@ app.on('ready', () => {
                     }
                 },
                 {
-                    label: 'Reload',
+                    label: 'Refresh',
                     accelerator: 'CmdOrCtrl+R',
                     click() {
-                        mainWindow.webContents.send('reload');
+                        mainWindow.webContents.send('refresh');
                     }
                 }
             ]

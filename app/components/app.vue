@@ -34,6 +34,9 @@ export default {
         ipcRenderer.on('invert', () => {
             this.$store.commit('INVERT');
         });
+        ipcRenderer.on('refresh', () => {
+            this.$store.dispatch('loadSidebar');
+        });
     }
 };
 </script>
