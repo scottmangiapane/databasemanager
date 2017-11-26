@@ -7,14 +7,16 @@ pg.types.setTypeParser(1184, 'text', (val) => val); // timestamp
 
 dotenv.load();
 
-const pool = new pg.Pool({
+const args = {
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT,
     ssl: process.env.DB_SSL === 'true'
-});
+};
+
+let client = new pg.Client(args);
 
 // TODO use
 export const getColumns = (name, schema, callback) => {
@@ -41,15 +43,22 @@ export const getTables = (callback) => {
 }
 
 export const query = (statement, callback) => {
-    const queryObject = {
-        text: statement,
-        rowMode: 'array'
-    };
-    pool.connect((err, client, done) => {
-        if (err) throw err;
-        client.query(queryObject, (err, res) => {
-            done();
-            callback(err, res);
+    client
+        .end()
+        .catch(() => { });
+    client = new pg.Client(args);
+    client.connect();
+    client
+        .query({
+            text: statement,
+            rowMode: 'array'
+        })
+        .then((res) => {
+            client.end();
+            callback(undefined, res);
+        })
+        .catch((err) => {
+            console.log('Couldn\'t execute query:');
+            console.log(err);
         });
-    });
 }
