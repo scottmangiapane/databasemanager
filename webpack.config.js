@@ -10,6 +10,7 @@ module.exports = {
     },
     resolve: {
         alias: {
+            static: 'static',
             vue: 'vue/dist/vue.js'
         }
     },
@@ -22,16 +23,6 @@ module.exports = {
             {
                 test: /\.vue$/,
                 loader: 'vue-loader'
-            },
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/
-            },
-            {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file-loader',
-                exclude: /node_modules/
             }
         ]
     },
