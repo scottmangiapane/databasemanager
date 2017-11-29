@@ -15,10 +15,9 @@
 </template>
 
 <script>
+import 'codemirror/mode/sql/sql';
 import { codemirror } from 'vue-codemirror-lite';
 import { mapActions } from 'vuex';
-import 'codemirror/lib/codemirror';
-import 'codemirror/mode/sql/sql';
 import database from './database.vue';
 
 export default {
@@ -32,10 +31,9 @@ export default {
             code: '',
             editorOptions: {
                 autofocus: true,
-                indentWithTabs: true,
                 lineNumbers: true,
+                lineWrapping: true,
                 mode: 'text/x-sql',
-                tabSize: 4,
                 theme: 'custom'
             }
         };

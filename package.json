@@ -4,19 +4,15 @@
     "author": "Scott Mangiapane",
     "license": "GPL 3.0",
     "description": "",
-    "keywords": [
-        "electron",
-        "vuejs"
-    ],
     "scripts": {
-        "build": "webpack --watch",
-        "dist": "webpack && electron-builder",
+        "build": "cross-env NODE_ENV=development webpack --watch",
+        "dist": "cross-env NODE_ENV=production webpack && electron-builder",
         "start": "nodemon --exec 'electron index.js'"
     },
     "build": {
         "appId": "com.scottmangiapane.databasemanager",
         "productName": "Database Manager",
-        "copyright": "Copyright (c) 2017 ${author}",
+        "copyright": "Copyright © 2017 Scott Mangiapane",
         "directories": {
             "output": "dist"
         },
@@ -26,12 +22,14 @@
             "index.html",
             "index.js",
             "package.json"
-        ]
+        ],
+        "icon": "static/icons/icon.icns"
     },
     "devDependencies": {
+        "cross-env": "^5.1.1",
         "css-loader": "^0.28.7",
         "electron": "1.7.9",
-        "electron-builder": "^19.46.9",
+        "electron-builder": "^19.47.0",
         "nodemon": "^1.12.1",
         "vue-devtools": "^3.1.9",
         "vue-loader": "^13.5.0",

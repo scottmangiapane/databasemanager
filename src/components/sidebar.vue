@@ -5,9 +5,9 @@
                 <a v-on:click="openSidebarFolder(category)">
                     <li class="sidebar-item">
                         <img v-if="!sidebar.items[category].isOpen"
-                                class="sidebar-icon" src="static/folder.svg">
+                                class="sidebar-icon" src="static/images/folder.svg">
                         <img v-if="sidebar.items[category].isOpen"
-                                class="sidebar-icon" src="static/folder-open.svg">
+                                class="sidebar-icon" src="static/images/folder-open.svg">
                         {{ category }}
                     </li>
                 </a>
@@ -18,10 +18,10 @@
                             <li class="sidebar-item sidebar-item-table">
                                 <img v-if="item.type === 'BASE TABLE'"
                                         class="sidebar-icon"
-                                        src="static/table.svg">
+                                        src="static/images/table.svg">
                                 <img v-if="item.type === 'VIEW'"
                                         class="sidebar-icon"
-                                        src="static/view.svg">
+                                        src="static/images/view.svg">
                                 {{ item.name }}
                             </li>
                         </div>

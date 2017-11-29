@@ -91,10 +91,6 @@ app.on('ready', () => {
             ]
         }
     ]));
-
-    if (process.env.NODE_ENV !== 'production') {
-        require('vue-devtools').install()
-    }
 });
 
 app.on('window-all-closed', () => {

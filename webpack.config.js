@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-    entry: './app/render.js',
+    entry: './src/render.js',
     output: {
         path: path.resolve(__dirname, 'build'),
         publicPath: 'build/',
@@ -10,7 +10,6 @@ module.exports = {
     },
     resolve: {
         alias: {
-            static: 'static',
             vue: 'vue/dist/vue.js'
         }
     },
