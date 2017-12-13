@@ -20,7 +20,7 @@ export default {
     name: 'database',
     computed: {
         rowsVisible() {
-            return this.$store.getters.rowsVisible
+            return this.$store.getters.rowsVisible;
         },
         table() {
             return this.$store.state.table;

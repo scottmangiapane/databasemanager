@@ -34,7 +34,7 @@ export const loadTable = ({ commit }, query) => {
     });
 };
 
-export const loadTableView = ({ commit }, { schema, name }) => {
+export const openTableView = ({ commit }, { schema, name }) => {
     commit('OPEN_TABLE_VIEW', { schema, name });
     const query = 'SELECT * FROM "' + schema + '"."' + name + '";';
     loadTable({ commit }, query);
@@ -43,6 +43,14 @@ export const loadTableView = ({ commit }, { schema, name }) => {
 export const openConsoleView = ({ commit }) => {
     commit('CLEAR_TABLE');
     commit('OPEN_CONSOLE_VIEW');
+}
+
+export const pageNext = ({ commit }) => {
+    commit('PAGE_NEXT');
+}
+
+export const pagePrev = ({ commit }) => {
+    commit('PAGE_PREV');
 }
 
 export const openSidebarFolder = ({ commit }, schema) => {

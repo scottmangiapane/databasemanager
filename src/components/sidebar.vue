@@ -13,7 +13,7 @@
                 </a>
                 <div v-if="sidebar.items[category].isOpen">
                     <a v-for="item in sidebar.items[category].content"
-                            v-on:click="loadTableView({schema: category, name: item.name})">
+                            v-on:click="openTableView({schema: category, name: item.name})">
                         <div v-bind:class="{ 'sidebar-selected': item.name === sidebar.selected.name }">
                             <li class="sidebar-item sidebar-item-table">
                                 <img v-if="item.type === 'BASE TABLE'"
@@ -37,7 +37,7 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
     name: 'sidebar',
-    computed: mapState(['sidebar', 'table']),
-    methods: mapActions(['loadTableView', 'openSidebarFolder'])
+    computed: mapState(['sidebar']),
+    methods: mapActions(['openTableView', 'openSidebarFolder'])
 };
 </script>

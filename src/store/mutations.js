@@ -39,6 +39,12 @@ export default {
         state.sidebar.selected = { schema, name };
         state.view = 'table';
     },
+    ['PAGE_NEXT'](state) {
+        state.table.offset += 500;
+    },
+    ['PAGE_PREV'](state) {
+        state.table.offset -= 500;
+    },
     ['OPEN_SIDEBAR_FOLDER'](state, { schema }) {
         state.sidebar.items[schema].isOpen = !state.sidebar.items[schema].isOpen;
     }

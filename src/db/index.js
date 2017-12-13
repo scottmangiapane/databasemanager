@@ -58,7 +58,6 @@ export const query = (statement, callback) => {
             callback(undefined, res);
         })
         .catch((err) => {
-            console.log('Couldn\'t execute query:');
-            console.log(err);
+            callback(err, undefined);
         });
 }

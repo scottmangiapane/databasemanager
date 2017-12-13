@@ -5,21 +5,28 @@
         </div>
         <div class="bar-right">
             <input type="button" value="<"
-                    v-bind:disabled="table.offset === 0"
-                    v-on:click="table.offset -= 500">
+                    v-bind:disabled="isFirstPage"
+                    v-on:click="pagePrev()">
             <input type="button" value=">"
-                    v-bind:disabled="table.rows.length - table.offset <= 500"
-                    v-on:click="table.offset += 500">
+                    v-bind:disabled="isLastPage"
+                    v-on:click="pageNext()">
         </div>
     </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
     name: 'navbar',
-    computed: mapState(['view', 'table']),
-    methods: mapActions(['openConsoleView'])
+    computed: {
+        isFirstPage() {
+            return this.$store.getters.isFirstPage;
+        },
+        isLastPage() {
+            return this.$store.getters.isLastPage;
+        }
+    },
+    methods: mapActions(['openConsoleView', 'pageNext', 'pagePrev'])
 };
 </script>
