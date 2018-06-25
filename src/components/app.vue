@@ -1,5 +1,5 @@
 <template>
-    <div id="app" v-bind:class="{dark: dark}">
+    <div id="app" v-bind:class="{dark}">
         <titlebar></titlebar>
         <navbar></navbar>
         <sidebar></sidebar>
