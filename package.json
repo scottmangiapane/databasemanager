@@ -5,9 +5,11 @@
     "license": "GPL-3.0",
     "description": "",
     "scripts": {
-        "build": "cross-env NODE_ENV=development webpack --watch",
+        "build": "cross-env NODE_ENV=development webpack",
+        "build:watch": "cross-env NODE_ENV=development webpack --watch",
         "dist": "cross-env NODE_ENV=production webpack && electron-builder",
-        "start": "nodemon --exec 'electron index.js'"
+        "start": "electron index.js",
+        "start:watch": "nodemon --exec 'electron index.js'"
     },
     "build": {
         "appId": "com.scottmangiapane.databasemanager",
