@@ -1,10 +1,10 @@
-const path = require('path');
-const webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
+    mode: 'production',
     entry: './src/render.js',
     output: {
-        path: path.resolve(__dirname, 'build'),
+        path: __dirname + '/build',
         publicPath: 'build/',
         filename: 'build.js'
     },
@@ -17,7 +17,10 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/,
-                loader: 'css-loader'
+                use: [
+                    'vue-style-loader',
+                    'css-loader'
+                ]
             },
             {
                 test: /\.vue$/,
@@ -25,5 +28,8 @@ module.exports = {
             }
         ]
     },
-    target: "electron"
+    plugins: [
+        new VueLoaderPlugin()
+    ],
+    target: "electron-renderer"
 };

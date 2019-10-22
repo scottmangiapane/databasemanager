@@ -1,11 +1,11 @@
 const dotenv = window.require('dotenv');
 const pg = window.require('pg');
 
+dotenv.config();
+
 pg.types.setTypeParser(1082, 'text', (val) => val); // date
 pg.types.setTypeParser(1114, 'text', (val) => val); // timestamp without timezone
 pg.types.setTypeParser(1184, 'text', (val) => val); // timestamp
-
-dotenv.load();
 
 const args = {
     host: process.env.DB_HOST,
@@ -16,9 +16,7 @@ const args = {
     ssl: process.env.DB_SSL === 'true'
 };
 
-let client = new pg.Client(args);
-
-// TODO use
+// TODO use this
 export const getColumns = (name, schema, callback) => {
     const statement = `
         SELECT column_name,
@@ -43,10 +41,7 @@ export const getTables = (callback) => {
 }
 
 export const query = (statement, callback) => {
-    client
-        .end()
-        .catch(() => { });
-    client = new pg.Client(args);
+    const client = new pg.Client(args);
     client.connect();
     client
         .query({

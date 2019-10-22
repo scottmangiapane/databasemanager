@@ -23,14 +23,16 @@ app.on('ready', () => {
         minHeight: 200,
         backgroundColor: (settings.get('dark')) ? '#292929' : '#FFFFFF',
         title: 'Database Manager',
-        titleBarStyle: 'hidden'
+        titleBarStyle: 'hidden',
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
 
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
 
-    mainWindow.webContents.executeJavaScript('require(\'electron\').webFrame.setZoomLevelLimits(1, 1);');
     mainWindow.webContents.on('will-navigate', (event) => {
         event.preventDefault();
     });

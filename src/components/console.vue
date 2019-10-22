@@ -16,7 +16,7 @@
 
 <script>
 import 'codemirror/mode/sql/sql';
-import { codemirror } from 'vue-codemirror-lite';
+import { codemirror } from 'vue-codemirror';
 import { mapActions } from 'vuex';
 import database from './database.vue';
 
