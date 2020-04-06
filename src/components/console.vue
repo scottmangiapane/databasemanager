@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/sql/sql';
 import { codemirror } from 'vue-codemirror';
 import { mapActions } from 'vuex';
